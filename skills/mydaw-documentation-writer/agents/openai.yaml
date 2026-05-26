@@ -1,0 +1,4 @@
+interface:
+  display_name: "MyDAW Documentation Writer"
+  short_description: "Writes user, developer, alpha, and release docs."
+  default_prompt: "Use this skill to write or review MyDAW user guides, developer architecture docs, module behavior references, MIDI/FX workflows, alpha onboarding, and release notes."

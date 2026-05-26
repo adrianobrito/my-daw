@@ -1,0 +1,4 @@
+interface:
+  display_name: "MyDAW MIDI Engine Specialist"
+  short_description: "Designs MIDI routing, clock, sync, and scheduling."
+  default_prompt: "Use this skill to design or review MyDAW MIDI routing, clock sync, channel mapping, scheduling, and transport integration."

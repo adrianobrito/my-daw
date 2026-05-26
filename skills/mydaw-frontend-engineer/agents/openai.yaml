@@ -1,0 +1,4 @@
+interface:
+  display_name: "MyDAW Frontend Engineer"
+  short_description: "Builds live UI and engine bindings."
+  default_prompt: "Use this skill to implement or review MyDAW frontend screens, module controls, meters, selectors, and UI-to-engine state bindings."

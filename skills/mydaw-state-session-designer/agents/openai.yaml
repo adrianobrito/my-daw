@@ -1,0 +1,4 @@
+interface:
+  display_name: "MyDAW State Session Designer"
+  short_description: "Designs sessions, scenes, presets, and recall."
+  default_prompt: "Use this skill to design or review MyDAW session schemas, scene recall, preset save/load, autosave, crash recovery, and live-safe persistence."

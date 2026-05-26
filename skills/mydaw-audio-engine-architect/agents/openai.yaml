@@ -1,0 +1,4 @@
+interface:
+  display_name: "MyDAW Audio Engine Architect"
+  short_description: "Designs low-latency audio graph and routing."
+  default_prompt: "Use this skill to design or review MyDAW audio graph architecture, device handling, routing, metering, and low-latency behavior."

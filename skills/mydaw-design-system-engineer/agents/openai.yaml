@@ -1,0 +1,4 @@
+interface:
+  display_name: "MyDAW Design System Engineer"
+  short_description: "Maintains reusable DAW UI components and states."
+  default_prompt: "Use this skill to define or review MyDAW UI tokens, components, visual states, and component usage rules."

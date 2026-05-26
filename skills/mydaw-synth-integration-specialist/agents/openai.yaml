@@ -1,0 +1,4 @@
+interface:
+  display_name: "MyDAW Synth Integration Specialist"
+  short_description: "Integrates bass, chord, and pluck synth modules."
+  default_prompt: "Use this skill to design or review MyDAW synth modules, presets, MIDI integration, voice behavior, and routing."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "MyDAW QA Test Engineer"
+  short_description: "Tests correctness, timing, and live reliability."
+  default_prompt: "Use this skill to create or review MyDAW unit, integration, MIDI timing, scene switching, dropout, CPU stress, and regression tests."
