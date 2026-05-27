@@ -9,6 +9,7 @@ Source inputs:
 - `main-performance-screen.md`
 - `main-performance-screen-component-contract.json`
 - `my-daw-prototype.png`
+- `module-states.md`
 - `skills/mydaw-design-system-engineer`
 - `skills/mydaw-ux-ui-designer`
 - `skills/mydaw-frontend-engineer`
@@ -145,6 +146,8 @@ Motion must communicate state without distracting the performer.
 
 Use these state names consistently in specs, component props, QA, and future frontend tests.
 
+`module-states.md` is the detailed component-level contract for how these states render on instrument lanes, source modules, pattern panels, FX slots, and master output modules. This section remains the shared vocabulary and token-level treatment.
+
 | State | Meaning | Required treatment |
 | --- | --- | --- |
 | `inactive` | Available but not currently producing or selected | Muted surface, secondary text, no activity accent |
@@ -260,6 +263,7 @@ Rules:
 - Meters and changing values must not resize the card.
 - Missing presets, samples, devices, or routes show `missing-resource` on the module, not only globally.
 - Menu controls must not hide live-critical state.
+- Dominant module state, secondary state badges, activity state, apply timing, and recovery action follow `module-states.md`.
 
 ### Mode Selector
 
