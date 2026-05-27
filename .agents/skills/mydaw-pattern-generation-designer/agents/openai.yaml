@@ -1,4 +1,4 @@
 interface:
   display_name: "MyDAW Pattern Generation Designer"
-  short_description: "Designs generative, circular, ARP, and MIDI FX patterns."
-  default_prompt: "Use this skill to design or review MyDAW MIDI Generation, MIDI Circular Pattern, ARP, variation, probability, swing, and live-safe switching behavior."
+  short_description: "Designs Generation/Circular patterns and live-safe switching."
+  default_prompt: "Use this skill to design or review MyDAW MIDI Generation, MIDI Circular Pattern, parameter ranges, pending mode behavior, quantized switching, seeds, variation, ARP, and MIDI scheduling contracts."

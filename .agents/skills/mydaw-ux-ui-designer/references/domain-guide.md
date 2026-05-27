@@ -1,37 +1,33 @@
 # UX UI Design Guide
 
-## Live Interface Principles
+## Canonical Sources
 
-- Keep the first screen useful during performance; do not start with a landing page.
-- Prefer dense but readable operational layouts over decorative panels.
-- Prioritize status visibility: transport, tempo, scene, selected modes, meters, mutes, solos, bypass, and pending recalls.
-- Use stable component dimensions so controls do not shift during playback.
-- Keep high-risk actions away from high-frequency controls.
+Use `docs/information-architecture.md` and `docs/main-performance-screen.md` first. Pull states from `docs/module-states.md`, tokens/components from `docs/design-system.md`, pattern behavior from `docs/pattern-mode-selector.md`, and scene behavior from `docs/scene-set-workflow.md`.
 
-## Main Screen Organization
+## Screen Model
 
-- Drums: show lanes or modules with source mode, pattern mode, mute/solo, meter, and quick sound controls.
-- Synths: group Bass, Poly/Chord, and Pluck/Stab with pattern source, preset, mute/solo, and key parameters.
-- Post-FX: show per-instrument or bus FX in order, with bypass and key macro controls.
-- Master FX: show Master EQ, Glue Compressor, Stereo Width, Limiter, output meter, and safety state.
-- Transport and scene/session status must stay visible or quickly reachable.
+Design one primary performance shell with ordered sections:
 
-## Mode Selection
+`Performance Shell -> Drums -> Synths -> Post-FX -> Master FX`
 
-- MIDI vs Sampled selection must show the active engine path and unavailable controls.
-- MIDI Generation vs MIDI Circular Pattern selection must show whether changes apply immediately, at next step, or at a quantized boundary.
-- Pattern variation controls should be performable with coarse controls: density, complexity, probability, swing, variation, length.
+The shell always preserves transport, tempo, time signature, current/target scene, CPU, master output, settings/device entry, and panic/all-notes-off.
 
-## Stage-Friendly Controls
+## Live Interaction Rules
 
-- Use larger hit targets for live-critical controls.
-- Avoid ambiguous toggles; label or icon states must clearly show active vs inactive.
-- Use meters and activity indicators to confirm audio/MIDI flow.
-- Use confirmation only for actions that can disrupt the set; avoid modal friction for normal performance changes.
+- Group controls by live decision: rhythm/source, melodic/source, post processing, master output, and safety.
+- Keep Drums, Synths, Post-FX, and Master FX in one scan path.
+- Keep active and pending states visually distinct. Pending never replaces the applied active state until confirmed.
+- Collapsed sections preserve activity, mute, solo, bypass, pending, loading, missing-resource, degraded, and error summaries.
+- High-frequency actions such as recall, mute, solo, bypass, stop, and panic should avoid modal confirmation; destructive edits require confirmation.
 
-## Interaction Behavior
+## Required Surfaces
 
-- Scene recall should display pending and applied states.
-- Mute and bypass should provide immediate feedback even if audio changes are quantized.
-- Collapse should preserve critical status indicators.
-- Error states should identify what is broken and what still works.
+- Drums exposes MIDI/Sampled mode, Drum Synth, Drum MIDI, Pattern Engine, and Sampled Preview/Sample Control states.
+- Synths exposes Bass, Poly/Chord, and Pluck/Stab lanes with preset/source, MIDI route, meter, pattern mode, ARP, MIDI FX, solo, mute, and expand controls.
+- Post-FX shows ordered instrument/post processing, bypass, macro controls, meters, and post level.
+- Master FX shows Master EQ, Glue Compressor, Stereo Width, Limiter, Master Level, master output meter, limiter/clipping warnings, and output safety state.
+- Scene selector shows ordered set scenes without replacing the shell.
+
+## Responsive Guidance
+
+Optimize for desktop live performance. At narrower widths, preserve section order and shell status first; reduce graph detail before hiding controls. Below 768 px, support inspection and basic operation only.

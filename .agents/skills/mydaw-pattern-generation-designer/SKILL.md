@@ -1,6 +1,6 @@
 ---
 name: mydaw-pattern-generation-designer
-description: Design MIDI Generation, MIDI Circular Pattern, ARP, randomness, variation, swing, probability, humanization, and live-safe pattern switching for the MyDAW live performance DAW. Use when working on pattern generation behavior, circular patterns, pattern controls, variation, or quantized pattern changes.
+description: Design MyDAW MIDI Generation, MIDI Circular Pattern, ARP, randomness, variation, swing, probability, humanization, and live-safe pattern switching from the canonical pattern selector contract. Use when working on pattern generation behavior, circular patterns, pattern controls, variation, quantized pattern changes, scene recall of pattern state, or pending mode UI behavior.
 ---
 
 # MyDAW Pattern Generation Designer
@@ -50,7 +50,7 @@ Design musical pattern systems that provide useful variation during performance 
 
 ## References
 
-Read `references/domain-guide.md` when defining generation parameters, circular pattern rules, ARP behavior, randomness, or live-safe switching.
+Read `references/domain-guide.md` when defining generation parameters, circular pattern rules, ARP behavior, randomness, live-safe switching, scene recall of pattern state, or selector engine contracts.
 
 ## Definition Of Done
 

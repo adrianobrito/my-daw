@@ -1,65 +1,37 @@
 # Product Architecture Guide
 
-## MVP Product Principles
+## Canonical Sources
 
-- Optimize for a performer using the app under time pressure, dim lighting, and limited attention.
-- Favor immediate control over deep editing in the MVP.
-- Treat reliability, low latency, predictable scene recall, and clear state visibility as product features.
-- Keep Drums, Synths, Post-FX, pattern generation, circular patterns, ARP, MIDI FX, and session persistence in one coherent performance workflow.
-- Avoid adding studio-production workflows unless they directly support live use.
+Start with `docs/product-definition.md`. Use `docs/information-architecture.md`, `docs/main-performance-screen.md`, `docs/pattern-mode-selector.md`, and `docs/scene-set-workflow.md` when product decisions affect screens, pattern behavior, or session/scene workflows.
 
-## Target Users
+## Product Position
 
-- Electronic live performers who need a compact session view for drums, synths, FX, and patterns.
-- Producers who perform prepared sets and need safe variation controls.
-- MIDI-focused performers who want generative and circular pattern workflows without building a full arrangement.
-- Alpha users who can tolerate incomplete depth but not unstable audio or unclear state.
+MyDAW is a cross-platform desktop DAW for solo electronic live performers. It prioritizes a stage-ready performance surface for drums, synths, MIDI pattern workflows, Post-FX, Master FX, and scene/session recall over deep studio editing.
 
-## MVP Boundaries
+The first screen is the usable live-performance surface. It is not a landing page, setup wizard, arrangement timeline, or mode hub.
 
-MVP includes:
+## MVP Scope
 
-- Main performance screen with Drums, Synths, Post-FX, Master FX, and transport context.
-- MIDI vs Sampled mode selection where relevant.
-- MIDI Generation and MIDI Circular Pattern modes.
-- Basic ARP and MIDI FX behavior.
-- Scene/session save, load, and recall.
-- Essential meters, mute, solo, bypass, collapse, and pattern switching.
-- Reliability and performance tests for live use.
+Include:
 
-Post-MVP includes:
+- Persistent shell with transport, tempo, time signature, scene, CPU, master output, settings/device entry, and panic/all-notes-off.
+- Drums with MIDI and Sampled source modes.
+- Synths with Bass Synth, Poly/Chord Synth, and Pluck/Stab Synth.
+- Post-FX instrument/post layer and distinct Master FX chain.
+- MIDI Generation and MIDI Circular Pattern modes with visible active and pending state.
+- Scene/session save, load, recall, autosave recovery, and missing-resource recovery.
+- Visible loading, pending, bypassed, muted, soloed, unavailable, degraded, and error states.
 
-- Full timeline arrangement.
-- Advanced sample editing.
-- Third-party plugin hosting.
-- Cloud collaboration.
-- Deep modulation matrix workflows.
-- Complex controller-mapping editors unless needed for alpha users.
+Defer full timeline arrangement, advanced sample editing, third-party plugin hosting, cloud collaboration, deep modulation matrix, complex controller mapping, and advanced external hardware routing unless promoted by explicit product decision.
 
-## Prioritization Rubric
+## Non-Negotiables
 
-Score features higher when they:
-
-- Reduce live-performance risk.
-- Make critical state visible.
-- Enable fast musical variation.
-- Simplify routing or scene recall.
-- Have low real-time safety risk.
-- Support a complete alpha rehearsal workflow.
-
-Defer features when they:
-
-- Require long configuration during performance.
-- Add hidden state that is hard to inspect.
-- Increase audio-thread complexity before core reliability exists.
-- Duplicate functionality already covered by a simpler control.
+- Reliability and timing are product features.
+- No known reproducible audio dropout ships in the intended alpha workflow.
+- Scene/session data must not be destroyed by failed load or recall.
+- Stuck-note recovery must be first-level through panic/all-notes-off.
+- Missing devices, samples, presets, routes, and failed recalls must be visible and recoverable where possible.
 
 ## Acceptance Criteria Pattern
 
-Write requirements as observable behavior:
-
-- "A performer can switch a drum lane from Sampled to MIDI without stopping transport."
-- "Scene recall updates selected pattern modes at the next quantized boundary."
-- "Bypassed FX remain visible and cannot silently affect audio."
-
-Avoid requirements that only describe implementation preference unless the implementation choice protects latency, reliability, or maintainability.
+Frame acceptance around live performance tasks: load a prepared session, start transport, vary drums/synth patterns, mute/solo lanes, adjust FX, recall scenes, recover from problems, and stop safely from the main screen.

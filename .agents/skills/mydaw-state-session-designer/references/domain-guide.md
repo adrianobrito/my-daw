@@ -1,38 +1,40 @@
-# State And Session Guide
+# State Session Guide
 
-## State Categories
+## Canonical Sources
 
-- Project/session state: global tempo, routing, modules, devices, scenes, presets, references.
-- Scene state: performance recall state such as active patterns, mutes, selected presets, FX states, macro values.
-- Preset state: reusable module settings for synths, sampler controls, FX chains, or pattern configurations.
-- Snapshot state: captured runtime configuration for fast recall.
-- Runtime-only state: meters, transient pending UI state, current audio buffer data, temporary errors.
+Use `docs/scene-set-workflow.md` and `docs/scene-set-workflow-component-contract.json` first. Use `docs/module-states.md` for affected scope visibility and `docs/pattern-mode-selector.md` for persisted pattern state.
 
-## Schema Requirements
+## Terminology
 
-- Include schema version.
-- Keep IDs stable for modules, routes, scenes, presets, and resources.
-- Store external resource references with enough information for recovery.
-- Validate before applying to engine state.
-- Provide migration paths for alpha changes when practical.
+- `session`: saved project containing set order, scenes, presets, resources, routes, devices, and defaults.
+- `set`: ordered performance plan inside a session.
+- `scene`: recallable performance state.
+- `snapshot`: runtime capture that can become a scene or recovery point after validation.
+- `preset`: reusable module, synth, sampler, FX, or pattern configuration.
 
-## Scene Recall
+## State Boundaries
 
-- Define quantization boundary for musical changes.
-- Preserve note-off safety.
-- Make pending and applied states visible.
-- Avoid file I/O and decoding in the real-time path.
-- Define partial failure behavior when a scene references missing resources.
+Persist session, scene, and preset state. Do not persist meters, CPU snapshots, MIDI playhead, scheduler queues, audio buffers, hover/focus/open menu state, in-flight command ids, or resolved transient errors as scene state.
 
-## Autosave And Crash Recovery
+Scene state may own source modes, pattern states, presets, mute/solo/bypass, macros, levels, route targets, tempo/time signature, and recall boundary overrides.
 
-- Autosave must never block audio or MIDI scheduling.
-- Use atomic writes or equivalent safe persistence.
-- Keep recovery files distinguishable from intentional saves.
-- Surface recovery options clearly on next launch.
+## Recall States And Timing
 
-## Presets
+Use scene recall states exactly:
 
-- Define whether presets are embedded, referenced, or both.
-- Define precedence between scene overrides and preset defaults.
-- Ensure preset recall is safe during playback.
+`current`, `selected`, `armed`, `pending`, `queued`, `applying`, `applied`, `blocked`, `failed`, `partialRecoverable`.
+
+Current scene remains authoritative until an applied snapshot confirms the target. While playing, default recall is `nextBar`; scenes that change phrase length, routes, presets, or several pattern engines may use `sceneBoundary`.
+
+## Validation And Recovery
+
+Validate loaded sessions and scene recalls before live application:
+
+- schema version supported or migrated,
+- stable unique ids,
+- resources available or recoverable,
+- devices/routes available or degraded gracefully,
+- FX/routing prepared off real-time paths,
+- changes represent bounded engine commands.
+
+Failed load or save preserves current in-memory session state. Failed recall preserves the last confirmed current scene. Partial recall is allowed only when failed changes are scoped and visible.

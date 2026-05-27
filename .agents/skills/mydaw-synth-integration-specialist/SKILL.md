@@ -1,6 +1,6 @@
 ---
 name: mydaw-synth-integration-specialist
-description: Design and integrate Bass Synth, Poly or Chord Synth, Pluck or Stab Synth, preset handling, and synth connections to MIDI and pattern engines for the MyDAW live performance DAW. Use when working on synth modules, instrument engines, synth presets, playable ranges, or synth-pattern integration.
+description: Design and integrate MyDAW Bass Synth, Poly/Chord Synth, Pluck/Stab Synth, preset handling, scene recall, routing, and synth connections to MIDI and pattern engines from the canonical MVP docs. Use when working on synth modules, instrument engines, synth presets, playable ranges, voice behavior, or synth-pattern integration.
 ---
 
 # MyDAW Synth Integration Specialist
@@ -51,7 +51,7 @@ Design and integrate synth modules that are musically useful, performable, and c
 
 ## References
 
-Read `references/domain-guide.md` when defining synth modules, presets, MIDI integration, voice behavior, or performance controls.
+Read `references/domain-guide.md` when defining synth modules, presets, MIDI integration, pattern inputs, scene recall, voice behavior, or performance controls.
 
 ## Definition Of Done
 

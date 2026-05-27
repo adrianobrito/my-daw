@@ -1,6 +1,6 @@
 ---
 name: mydaw-fx-chain-architect
-description: Design and implement instrument FX, Post-FX, and Master FX chains for the MyDAW live performance DAW. Use when working on EQ, Compressor, Reverb, Delay, Master EQ, Glue Compressor, Stereo Width, Limiter, FX bypass, FX ordering, routing, or live-safe FX changes.
+description: Design and implement MyDAW instrument FX, Post-FX, and Master FX chains from the canonical main-screen, design-system, and module-state docs. Use when working on EQ, Compressor, Reverb, Delay, Master EQ, Glue Compressor, Stereo Width, Limiter, FX bypass, FX ordering, routing, scene recall, or live-safe FX changes.
 ---
 
 # MyDAW FX Chain Architect
@@ -51,7 +51,7 @@ Design FX chains that shape sound during performance while preserving routing cl
 
 ## References
 
-Read `references/domain-guide.md` when defining FX order, bypass semantics, parameter ranges, master processing, or routing behavior.
+Read `references/domain-guide.md` when defining FX order, bypass semantics, parameter ranges, master processing, scene recall behavior, or routing behavior.
 
 ## Definition Of Done
 

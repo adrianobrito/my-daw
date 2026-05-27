@@ -1,40 +1,35 @@
 # FX Chain Guide
 
-## Chain Model
+## Canonical Sources
 
-- Instrument or bus source feeds Post-FX.
-- Post-FX feeds Master FX.
-- Master FX order defaults to Master EQ, Glue Compressor, Stereo Width, Limiter unless product requirements choose otherwise.
-- Meter taps should support source, post-FX, and master output visibility.
+Use `docs/product-definition.md`, `docs/main-performance-screen.md`, `docs/design-system.md`, and `docs/module-states.md` for MVP FX scope, routing visibility, state treatment, and UI contracts.
 
-## MVP FX
+## MVP Chains
 
-- EQ: gain bands, frequency controls if exposed, and bypass.
-- Compressor: threshold, ratio or amount, attack/release or macro, makeup gain if needed.
-- Reverb: size/decay, wet/dry, pre-delay if needed.
-- Delay: time, feedback, wet/dry, sync mode if supported.
-- Master EQ: broad tone correction.
-- Glue Compressor: bus cohesion with conservative defaults.
-- Stereo Width: master width with mono-safe considerations.
-- Limiter: final protection with visible gain reduction or clip state.
+Post-FX shows ordered instrument/post processing before master output. Master FX is semantically distinct and includes:
 
-## Bypass And Ordering
+- Master EQ,
+- Glue Compressor,
+- Stereo Width,
+- Limiter,
+- Master Level,
+- master output metering.
 
-- Bypass should avoid clicks and preserve predictable signal flow.
-- Reverb and delay tail behavior must be specified.
-- Ordering changes must be prepared outside real-time paths.
-- Disabled FX should not consume unnecessary CPU where avoidable.
-- UI must show active order and bypass state clearly.
+Bypassed processors remain visible in chain position. Bypass never looks like deletion and should preserve signal continuity without pops.
 
-## Live Safety
+## State And Recall
 
-- Limit controls that can cause sudden extreme level changes.
-- Provide sane defaults and bounded ranges.
-- Test rapid bypass toggling and scene recall.
-- Master Limiter should protect output but not hide gain staging problems.
+FX slots use `active`, `bypassed`, `pending`, `missing-resource`, and `error` states. Pending bypass, order, preset, or scene-driven changes remain visually distinct until confirmed.
 
-## Persistence
+Scene recall may affect FX bypass, macro values, levels, presets, and routes. Prepare expensive changes off real-time paths and apply through bounded handoffs.
 
-- Save FX order, enabled/bypassed state, parameters, and macro values.
-- Define how missing or unsupported FX types load.
-- Scene recall should update chains at safe boundaries when needed.
+## Design Constraints
+
+- Keep MVP controls macro-level and stage-friendly.
+- Preserve left-to-right or explicit order.
+- Master limiter, clipping, output protect, and route errors override normal master accent.
+- Per-slot meters and changing value labels must not resize the chain.
+
+## QA Focus
+
+Test rapid bypass, scene recall, route changes, limiter/clipping warnings, CPU load, and dropout risk under transport.

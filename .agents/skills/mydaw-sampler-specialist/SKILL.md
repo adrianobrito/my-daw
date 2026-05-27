@@ -1,6 +1,6 @@
 ---
 name: mydaw-sampler-specialist
-description: Design sample loading, playback, triggering, transpose controls, sample envelopes, sample control, and sample-related FX integration for the MyDAW live performance DAW. Use when working on sampled mode, drum samples, sample playback reliability, envelopes, transpose, or sample EQ controls.
+description: Design MyDAW Sampled mode, sample loading, playback, triggering, missing-sample recovery, transpose controls, envelopes, sample control, scene recall, and sample-related FX integration from the canonical MVP docs. Use when working on sampled mode, drum samples, sample playback reliability, envelopes, transpose, sample EQ controls, or sample resource handling.
 ---
 
 # MyDAW Sampler Specialist
@@ -50,7 +50,7 @@ Design and implement sample playback behavior that is responsive, predictable, a
 
 ## References
 
-Read `references/domain-guide.md` when designing Sampled mode, loading behavior, envelopes, transpose, voice allocation, or sample FX integration.
+Read `references/domain-guide.md` when designing Sampled mode, loading behavior, missing-sample recovery, envelopes, transpose, voice allocation, scene recall, or sample FX integration.
 
 ## Definition Of Done
 

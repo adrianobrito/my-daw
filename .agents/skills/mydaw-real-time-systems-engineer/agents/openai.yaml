@@ -1,4 +1,4 @@
 interface:
   display_name: "MyDAW Real-Time Systems Engineer"
-  short_description: "Reviews latency, jitter, CPU, and thread safety."
-  default_prompt: "Use this skill to review MyDAW real-time safety, audio-thread code, MIDI timing, performance budgets, and live reliability risks."
+  short_description: "Protects audio/MIDI paths from latency and blocking work."
+  default_prompt: "Use this skill to review MyDAW audio-thread, MIDI scheduling, scene recall handoffs, hot paths, bounded queues, performance budgets, latency, jitter, CPU, memory, and live reliability risks."

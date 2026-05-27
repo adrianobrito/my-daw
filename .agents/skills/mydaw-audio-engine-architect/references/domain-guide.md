@@ -1,42 +1,26 @@
-# Audio Engine Architecture Guide
+# Audio Engine Guide
 
-## Audio Graph Shape
+## Canonical Sources
 
-Use a predictable graph:
+Use `docs/product-definition.md` for non-negotiables, `docs/information-architecture.md` and `docs/main-performance-screen.md` for routing visibility, and `docs/module-states.md` for meter/error state requirements.
 
-- sources: sampler voices, synth voices, external audio where supported
-- instrument buses: Drums, Bass Synth, Poly/Chord Synth, Pluck/Stab Synth
-- Post-FX chains: instrument or bus-level FX
-- Master FX: Master EQ, Glue Compressor, Stereo Width, Limiter
-- output: device output and meters
+## Audio Graph Model
 
-Keep graph mutation outside the audio callback. Apply graph changes using prepared commands, double buffering, or lock-free handoff patterns appropriate to the implementation stack.
+Use predictable source-to-output flow:
 
-## Device Handling
+`Instruments -> assigned Post-FX path -> Master FX -> output -> meters`
 
-- Support explicit device selection, sample rate, buffer size, and channel configuration.
-- Provide fallback behavior when a device disappears.
-- Rebuild or rebind the graph safely after device changes.
-- Surface device errors to UI without blocking audio paths.
+Drums, Bass Synth, Poly/Chord Synth, Pluck/Stab Synth, sampled sources, Post-FX, Master FX, master level, limiter, and output meters must expose enough state for the shell and section summaries.
 
-## Routing Rules
+## Real-Time Rules
 
-- Instruments route to their assigned Post-FX path, then to Master FX, then output.
-- Bypass must preserve signal continuity and avoid pops.
-- Mute and solo behavior must be deterministic and testable.
-- Meter taps should be defined at useful points: source, post-FX, master pre-limiter, master output.
+Keep audio callback and sample-accurate paths bounded, non-blocking, and allocation-free in steady state where practical. Exclude file I/O, network I/O, logging, device enumeration, synchronous UI calls, waits, futures, locks that can block, and unbounded queues from real-time paths.
 
-## Metering
+Prepare graph changes outside the callback and apply them through bounded real-time-safe handoffs.
 
-- Calculate meter values on the audio side using lightweight accumulation.
-- Publish meter snapshots to UI at a lower control-rate cadence.
-- Include clipping or overload state where needed.
-- Do not let UI polling block audio processing.
+## Device And Meter Behavior
 
-## Low-Latency Requirements
-
-- Avoid locks, heap allocation, file I/O, logging, network calls, and blocking waits on the audio thread.
-- Preload or prepare resources outside real-time paths.
-- Use bounded work per buffer.
-- Treat denormals, oversampling, and expensive FX as CPU risks.
-- Document any unavoidable tradeoff and require real-time review.
+- Treat device loss, reconnect, sample-rate changes, buffer-size changes, underruns, and broken output routes as expected failure modes.
+- Publish lightweight meter snapshots to UI at control-rate cadence.
+- Master output failures are summarized in the shell and Master FX section.
+- Missing resources and route failures surface at affected modules, sections, and global summary when output is affected.

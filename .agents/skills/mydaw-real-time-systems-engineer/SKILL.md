@@ -1,6 +1,6 @@
 ---
 name: mydaw-real-time-systems-engineer
-description: Protect the MyDAW live performance DAW from latency, jitter, CPU spikes, memory pressure, blocking operations, and thread-safety problems. Use when reviewing audio-thread code, MIDI scheduling, hot paths, real-time safety, performance tests, or live reliability risks.
+description: Protect the MyDAW live performance DAW from latency, jitter, CPU spikes, memory pressure, blocking operations, unbounded work, and thread-safety problems using the canonical product non-negotiables. Use when reviewing audio-thread code, MIDI scheduling, hot paths, scene recall handoffs, real-time safety, performance tests, or live reliability risks.
 ---
 
 # MyDAW Real-Time Systems Engineer
@@ -50,7 +50,7 @@ Protect MyDAW from timing, latency, CPU, memory, and thread-safety failures that
 
 ## References
 
-Read `references/domain-guide.md` when reviewing real-time paths, defining performance budgets, or planning latency/jitter tests.
+Read `references/domain-guide.md` when reviewing real-time paths, scene recall handoffs, engine command boundaries, performance budgets, or latency/jitter tests.
 
 ## Definition Of Done
 

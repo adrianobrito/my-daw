@@ -1,36 +1,30 @@
 # MIDI Engine Guide
 
-## MIDI Routing
+## Canonical Sources
 
-- Represent MIDI devices separately from logical routes.
-- Allow routes from physical input, internal pattern generators, ARP, and MIDI FX to instruments or external outputs.
-- Keep channel mapping explicit and visible to state/session persistence.
-- Define behavior when an output device is missing during session load.
+Use `docs/product-definition.md` for reliability constraints, `docs/pattern-mode-selector.md` for pattern switching, and `docs/scene-set-workflow.md` for scene recall timing. Use JSON contracts when defining command and snapshot fields.
 
-## Clock And Transport
+## Core MIDI Responsibilities
 
-- Define one clock authority at a time: internal clock or external MIDI clock.
-- Support start, stop, continue, tempo, beat position, and quantized boundaries.
-- Document how tempo changes affect scheduled notes and pattern generation.
-- Avoid UI-thread timing as a source of musical scheduling.
+- Maintain one clock authority at a time: internal clock or external MIDI clock.
+- Integrate transport, tempo, beat position, start/stop/continue, and clock sync deterministically.
+- Route MIDI input/output with explicit channel mapping and reconnect behavior.
+- Schedule pattern, ARP, MIDI FX, synth, sampler, and scene-driven events with timestamps or sample-accurate offsets.
 
-## Scheduling
+## Pattern Switching
 
-- Use timestamps or sample-accurate offsets when integrating with audio.
-- Schedule note-on and note-off pairs safely.
-- Preserve event ordering for simultaneous events.
-- Bound lookahead and avoid unbounded event queues.
+Pattern switches use `requestPatternModeSwitch` with lane id, requested mode, requested boundary, and command id. While playing, default mode switching applies at `nextBar` unless a lane contract narrows it to `nextStep`.
 
-## MIDI Processing
+Do not let UI timing schedule musical events. Render active and pending state from engine snapshots.
 
-- ARP and MIDI FX should transform event streams without hiding source state.
-- Probability, swing, humanization, and variation must be deterministic enough for recall when required.
-- Panic/all-notes-off must be available for stuck notes.
-- Channel pressure, CC, pitch bend, and program changes should be scoped to MVP requirements.
+## Scene Recall Timing
 
-## Reliability Checks
+Scene recall may affect source modes, pattern modes, presets, mutes, solos, bypass, routes, tempo, and time signature. The MIDI layer must support prepared, bounded handoffs at `immediate`, `nextStep`, `nextBar`, `nextPhrase`, or `sceneBoundary`.
 
-- Test clock drift against external sources.
-- Test dense note streams and rapid scene changes.
-- Test device disconnect and reconnect.
-- Test stuck-note prevention during transport stop, route changes, and scene recall.
+## Safety Requirements
+
+- Preserve note-on/note-off pairing through mode switches, route changes, transport stop, and scene recall.
+- Preserve deterministic ordering for simultaneous events.
+- Keep scheduler lookahead and pending queues bounded.
+- Provide panic/all-notes-off for stuck-note recovery.
+- Treat device disconnect/reconnect and clock loss as expected failure modes.

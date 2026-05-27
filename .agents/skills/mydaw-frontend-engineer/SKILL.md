@@ -1,6 +1,6 @@
 ---
 name: mydaw-frontend-engineer
-description: Implement the MyDAW live performance UI and connect it to audio, MIDI, state, and backend services. Use when building Drums, Synths, Post-FX, Master FX, module cards, selectors, meters, knobs, mute, solo, bypass, collapse, or pattern mode switching.
+description: Implement the MyDAW live performance UI from the canonical UX/design/component docs and connect it to audio, MIDI, state, and backend services. Use when building the performance shell, Drums, Synths, Post-FX, Master FX, module cards, selectors, meters, knobs, mute, solo, bypass, collapse, scene status, session surfaces, or pattern mode switching.
 ---
 
 # MyDAW Frontend Engineer
@@ -49,7 +49,7 @@ Implement the live-performance interface and connect UI state to engine state wi
 
 ## References
 
-Read `references/domain-guide.md` when implementing performance screen structure, module components, UI-engine binding, or live control behavior.
+Read `references/domain-guide.md` when implementing performance screen structure, module components, UI-engine binding, live control behavior, scene/session surfaces, or pattern selector contracts.
 
 ## Definition Of Done
 

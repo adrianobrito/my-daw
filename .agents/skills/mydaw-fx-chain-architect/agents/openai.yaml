@@ -1,4 +1,4 @@
 interface:
   display_name: "MyDAW FX Chain Architect"
-  short_description: "Designs Post-FX and Master FX chains."
-  default_prompt: "Use this skill to design or review MyDAW EQ, compression, reverb, delay, master FX, bypass, ordering, and routing behavior."
+  short_description: "Designs Post-FX, Master FX, bypass, routing, and recall."
+  default_prompt: "Use this skill to design or review MyDAW instrument Post-FX, Master FX, EQ, compressor, reverb, delay, stereo width, limiter, bypass, ordering, routing, scene recall, and live-safe FX changes."

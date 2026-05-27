@@ -1,4 +1,4 @@
 interface:
   display_name: "MyDAW QA Test Engineer"
-  short_description: "Tests correctness, timing, and live reliability."
-  default_prompt: "Use this skill to create or review MyDAW unit, integration, MIDI timing, scene switching, dropout, CPU stress, and regression tests."
+  short_description: "Tests workflows, component states, timing, reliability, and alpha readiness."
+  default_prompt: "Use this skill to define or run MyDAW workflow acceptance tests, component-state checks, MIDI timing tests, scene switching tests, audio dropout tests, CPU stress tests, regressions, and alpha release validation."

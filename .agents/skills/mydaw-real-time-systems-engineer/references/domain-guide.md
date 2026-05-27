@@ -1,70 +1,49 @@
 # Real-Time Systems Guide
 
-## Safety Rules
+## Canonical Sources
 
-Avoid in real-time paths:
+Use `docs/product-definition.md` non-negotiables first. Use `docs/pattern-mode-selector.md` and `docs/scene-set-workflow.md` when reviewing pattern switching and scene recall handoffs.
 
-- locks that can block
-- heap allocation in steady-state processing
-- file I/O
-- network I/O
-- logging
-- device enumeration
-- synchronous UI calls
-- unbounded loops or queues
-- waiting on futures, promises, or condition variables
+## Real-Time Path Rules
 
-## Path Classification
+On audio-thread and sample-accurate MIDI paths, avoid:
 
-Real-time paths include:
+- locks that can block,
+- heap allocation in steady state,
+- file I/O,
+- network I/O,
+- logging,
+- device enumeration,
+- synchronous UI calls,
+- unbounded queues,
+- unbounded loops,
+- waits on futures/promises/condition variables.
 
-- audio callback
-- sample rendering
-- synth voice rendering
-- FX processing
-- sample-accurate MIDI event consumption
+Prepare graph, route, preset, sample, session, and scene changes outside real-time paths. Apply through bounded, real-time-safe handoffs.
 
-Near-real-time paths include:
+## Live Reliability Risks
 
-- MIDI input handling
-- scheduler lookahead
-- transport clock updates
+Review these as first-class product risks:
 
-Non-real-time paths include:
+- audio dropouts,
+- MIDI jitter,
+- stuck notes,
+- lost note-offs,
+- CPU spikes,
+- memory churn,
+- device disconnect/reconnect,
+- route changes during playback,
+- rapid scene recall,
+- rapid bypass/mute/solo/pattern switching.
 
-- UI rendering
-- persistence
-- sample decoding
-- preset loading
-- crash reporting
+## Required Safeguards
 
-## Budgets
+- Meter taps publish lightweight UI snapshots and never block processing.
+- Scheduler lookahead and pending command queues stay bounded.
+- Pattern switching preserves note-on/note-off pairing.
+- Scene recall validates and prepares resources before real-time handoff.
+- Panic/all-notes-off remains available for recovery.
 
-Define targets for:
+## Acceptance Criteria
 
-- audio callback maximum duration
-- average and peak CPU
-- MIDI jitter
-- scene recall duration
-- memory allocation rate
-- maximum voice and FX counts
-
-Tie budgets to target hardware and buffer size.
-
-## Review Checklist
-
-- Are resources prepared before playback?
-- Can any engine command block?
-- Can UI updates back up engine queues?
-- Are queues bounded?
-- Are graph changes applied safely?
-- Are note-offs guaranteed during state changes?
-- Are errors surfaced without blocking processing?
-
-## Stress Scenarios
-
-- Dense patterns plus multiple synths and FX.
-- Rapid scene recall while transport runs.
-- Device disconnect and reconnect.
-- Large sample load while playback continues.
-- Repeated bypass, mute, solo, and pattern mode switching.
+No private-alpha release ships with a known reproducible audio dropout in the intended MVP workflow. Remaining timing or performance risks must have concrete mitigation and test coverage.

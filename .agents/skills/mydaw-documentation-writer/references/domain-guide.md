@@ -1,60 +1,37 @@
-# Documentation Guide
+# MyDAW Documentation Guide
 
-## User Documentation
+## Canonical Sources
 
-Focus on live tasks:
+Use the repo `docs/` folder as the source of truth:
 
-- start a session
-- use Drums and Synths
-- choose MIDI vs Sampled mode
-- use MIDI Generation and MIDI Circular Pattern modes
-- control ARP and MIDI FX
-- shape sound with Post-FX and Master FX
-- save/load sessions
-- recall scenes safely
-- recover from missing samples or devices
+- `product-definition.md`: product position, target user, MVP scope, workflow, platforms, and non-negotiables.
+- `information-architecture.md`: screen hierarchy, section order, navigation, reveal, and state visibility.
+- `main-performance-screen.md`: implementation-ready shell, Drums, Synths, Post-FX, Master FX, interaction flows, and responsive behavior.
+- `design-system.md`: tokens, component inventory, state vocabulary, accessibility, and QA checklist.
+- `module-states.md`: module-state precedence, visual treatment, interaction rules, and frontend fields.
+- `pattern-mode-selector.md` and `pattern-mode-selector-component-contract.json`: Generation/Circular selector behavior, parameters, commands, snapshots, and MIDI scheduling constraints.
+- `scene-set-workflow.md` and `scene-set-workflow-component-contract.json`: set/session/scene terminology, recall states, persistence boundaries, validation, autosave, and recovery.
 
-## Developer Documentation
+## Writing Rules
 
-Document:
+- Write from the solo electronic performer's live task first, then add reference detail.
+- Keep the first screen as the usable performance surface. Do not describe a landing page, setup wizard, arrangement timeline, or mode hub as MVP behavior.
+- Mark deferred work explicitly: full timeline, advanced sample editor, third-party plugin hosting, cloud collaboration, deep modulation matrix, and complex controller mapping.
+- Use shared terms exactly: Drums, Synths, Post-FX, Master FX, MIDI Generation, MIDI Circular Pattern, Sampled, scene, set, session, snapshot, preset.
+- Use shared states exactly: `inactive`, `active`, `armed`, `pending`, `muted`, `soloed`, `bypassed`, `disabled`, `loading`, `missing-resource`, `error`.
+- For scene docs, use scene recall states exactly: `current`, `selected`, `armed`, `pending`, `queued`, `applying`, `applied`, `blocked`, `failed`, `partialRecoverable`.
 
-- UI, backend, state, audio, and MIDI boundaries
-- command/event/query flows
-- audio and MIDI real-time constraints
-- session, scene, preset, and snapshot schemas
-- module lifecycle
-- testing and release expectations
+## Documentation Patterns
 
-## Module References
+- Product docs should state MVP scope, post-MVP boundaries, supported platforms, and acceptance criteria.
+- UX and design docs should preserve shell -> Drums -> Synths -> Post-FX -> Master FX ordering and collapsed critical-state visibility.
+- Developer docs should identify ownership, data flow, command/snapshot APIs, state boundaries, and real-time constraints.
+- Component-contract docs should name required data, variants, controls, commands, snapshots, and acceptance criteria.
+- Alpha docs and release notes should include setup, audio/MIDI device notes, known limitations, platform caveats, QA status, and diagnostics/reporting guidance.
 
-For each module, include:
+## Definition Of Done
 
-- purpose
-- inputs and outputs
-- key controls
-- default behavior
-- persistence behavior
-- live-safety notes
-- known limitations
-
-## Alpha Onboarding
-
-Include:
-
-- supported platform and setup steps
-- audio/MIDI device setup
-- included examples or starter sessions
-- how to report bugs
-- what diagnostics to include
-- known issues and workarounds
-
-## Release Notes
-
-Release notes should include:
-
-- version and date
-- highlights
-- fixes
-- known issues
-- testing status
-- upgrade or compatibility notes
+- Docs align with current canonical specs and component contracts.
+- Active vs pending behavior remains unambiguous.
+- Real-time safety constraints are visible wherever engine, MIDI, audio, state, or persistence behavior is described.
+- Known limitations and deferred features are explicit.

@@ -1,6 +1,6 @@
 ---
 name: mydaw-devops-release-engineer
-description: Handle builds, packaging, release automation, versioning, crash reporting, deployment, and private alpha release workflows for the MyDAW live performance DAW. Use when configuring CI, installers, release artifacts, crash reporting, versioning, or alpha distribution.
+description: Handle MyDAW cross-platform desktop builds, packaging, release automation, versioning, crash reporting, diagnostics, release gates, and private alpha workflows from the canonical product and release docs. Use when configuring CI, installers, release artifacts, crash reporting, versioning, platform readiness, or alpha distribution.
 ---
 
 # MyDAW DevOps Release Engineer
@@ -51,7 +51,7 @@ Create reliable build, packaging, release, and crash-reporting workflows so alph
 
 ## References
 
-Read `references/domain-guide.md` when designing CI, packages, versioning, crash reporting, alpha deployment, or release gates.
+Read `references/domain-guide.md` when designing CI, packages, versioning, crash reporting, alpha deployment, diagnostics, platform readiness, or release gates.
 
 ## Definition Of Done
 

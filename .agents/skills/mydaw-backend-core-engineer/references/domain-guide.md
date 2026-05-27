@@ -1,40 +1,33 @@
 # Backend Core Guide
 
-## Layer Boundaries
+## Canonical Sources
 
-- UI layer: renders state and sends commands.
-- Application core: validates commands, coordinates services, owns high-level workflow.
-- State/session layer: serializes, validates, migrates, and recalls persisted state.
-- Engine layer: audio, MIDI, pattern, synth, sampler, and FX runtime behavior.
-- Platform layer: devices, file system, crash reporting, packaging integrations.
+Use `docs/design-system.md`, `docs/module-states.md`, `docs/pattern-mode-selector-component-contract.json`, and `docs/scene-set-workflow-component-contract.json` when shaping command, event, query, and snapshot APIs.
 
-Avoid direct UI access to real-time engine internals.
+## Ownership Boundaries
 
-## Messaging
+Keep boundaries explicit:
 
-- Commands represent intent from UI or controllers.
-- Events represent completed or observed changes.
-- Queries or subscriptions expose current state.
-- High-frequency streams such as meters should use specialized throttled channels.
-- Errors must be structured enough for UI and logs.
+- UI renders view state and sends commands.
+- Backend coordinates commands, events, queries, validation, and subscriptions.
+- State/session owns persisted session, set, scene, preset, snapshot, autosave, migration, and validation state.
+- Audio/MIDI engines own real-time processing, scheduling, clocks, routing handoffs, and engine snapshots.
+- UI components do not mutate engine internals.
 
-## Module Architecture
+## Command And Snapshot Patterns
 
-- Define module identity, lifecycle, parameters, routing, presets, and serialization.
-- Support instruments, FX, MIDI processors, and pattern sources with consistent contracts where practical.
-- Avoid plugin flexibility that exceeds MVP needs.
-- Ensure modules can be restored from session state.
+- Treat commands as asynchronous and fallible.
+- Correlate command requests and snapshots with stable ids.
+- Publish snapshots for active/pending/error state; do not require UI to infer applied state from command dispatch.
+- Keep high-frequency meter/activity updates throttled and separate from control/state events.
 
-## Persistence APIs
+## Required Contracts
 
-- Provide save, load, autosave, recover, preset save/load, and scene recall operations.
-- Validate before applying loaded data.
-- Keep persistence work off real-time threads.
+- Pattern switch commands include lane id, requested mode, requested boundary, and command id.
+- Scene recall commands include target scene, requested boundary, command id, and optional replacement/partial flags.
+- Session load validates before replacing active live session.
+- Save/autosave runs off real-time paths and failed save preserves in-memory state.
 
-## Integration Risks
+## Real-Time Safety
 
-- UI event floods overwhelming engine queues.
-- Unbounded command queues.
-- Ambiguous ownership of derived state.
-- Blocking file or device work inside engine callbacks.
-- Silent partial failures during scene recall.
+Backend messaging must not introduce blocking work, unbounded queues, synchronous UI calls, logging, or file I/O into audio callback or sample-accurate MIDI paths.

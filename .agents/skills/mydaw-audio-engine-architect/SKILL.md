@@ -1,6 +1,6 @@
 ---
 name: mydaw-audio-engine-architect
-description: Design and implement low-latency audio engine architecture, device handling, routing, metering, and audio graph behavior for the MyDAW live performance DAW. Use when working on audio graph design, instruments to Post-FX and Master FX routing, device setup, meters, or low-latency audio behavior.
+description: Design and implement MyDAW low-latency audio engine architecture, device handling, source-to-Post-FX-to-Master-FX routing, metering, graph handoffs, and output recovery from the canonical product and screen docs. Use when working on audio graph design, routing, device setup, meters, output safety, or low-latency audio behavior.
 ---
 
 # MyDAW Audio Engine Architect
@@ -50,7 +50,7 @@ Design and implement the low-latency audio engine and routing model that keeps M
 
 ## References
 
-Read `references/domain-guide.md` when designing routing, device lifecycle, metering, audio graph APIs, or real-time audio behavior.
+Read `references/domain-guide.md` when designing routing, device lifecycle, metering, audio graph APIs, source-to-Post-FX-to-Master-FX flow, or real-time audio behavior.
 
 ## Definition Of Done
 

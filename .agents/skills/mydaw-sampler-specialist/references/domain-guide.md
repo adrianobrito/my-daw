@@ -1,37 +1,29 @@
 # Sampler Guide
 
-## Sample Lifecycle
+## Canonical Sources
 
-- Load file metadata and decode audio outside the audio callback.
-- Prepare playback buffers before triggering.
-- Report loading, ready, missing, invalid, and error states.
-- Keep session references portable where possible.
-- Avoid blocking scene recall on slow disk access during performance.
+Use `docs/product-definition.md`, `docs/main-performance-screen.md`, `docs/module-states.md`, and `docs/scene-set-workflow.md` for Sampled mode, missing resources, state visibility, and recall behavior.
 
-## Triggering Behavior
+## Sampled Mode Scope
 
-- Define one-shot, gated, retrigger, choke, and polyphony behavior per module type.
-- Preserve note-off handling for gated samples.
-- Provide panic or stop behavior for stuck or runaway voices.
-- Keep rapid triggering bounded by voice limits.
+Drums exposes MIDI and Sampled source modes. Sampled mode activates Sample Control and Sample FX; MIDI mode may keep sampled preview visible as disabled or preview-only when performer expectations require it.
 
-## Controls
+Sample-related controls should stay stage-friendly: sample identity, loading/missing state, preview availability, tune/transpose, decay/envelope, drive/EQ where supported, level, velocity, and humanize when present.
 
-- Gain, pan, transpose, tune, start offset, envelope attack/decay/sustain/release, and 3-band EQ should have documented ranges.
-- Transpose must define quality/CPU tradeoffs and whether it is semitone, cents, or continuous.
-- Envelopes should avoid clicks on trigger, release, mute, and scene recall.
+## Lifecycle
 
-## Integration
+Define sample lifecycle explicitly:
 
-- Sampled mode should share routing with other instrument sources through Post-FX and Master FX.
-- MIDI triggers should use the MIDI engine’s scheduling contract.
-- Scene recall should not silently swap to a missing sample.
-- UI should expose missing-resource state and allow recovery.
+`reference -> load -> decode -> prepare -> trigger -> stop -> unload`
 
-## Reliability Tests
+File I/O and decode never run on audio or MIDI real-time paths. Scene recall validates and prepares required resources before live application.
 
-- Rapid triggering under CPU load.
-- Switching samples while transport runs.
-- Scene recall with loaded, missing, and large samples.
-- Transpose and envelope changes during playback.
-- Mute, solo, and bypass interaction with sample voices.
+## States And Recovery
+
+Use `loading` for sample preparation, `missing-resource` for absent samples, and `error` for failed decode, route validation, or playback setup. Missing samples appear on the affected source module, section summary, and scene/session recovery surfaces when relevant.
+
+Failed sample load must not destroy the current live session or silently silence unrelated modules.
+
+## QA Focus
+
+Test rapid triggering, sample changes during transport, missing files, failed decode, scene recall, voice limits, CPU/memory pressure, and dropout risk.

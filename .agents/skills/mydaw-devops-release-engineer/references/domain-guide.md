@@ -1,37 +1,38 @@
 # DevOps Release Guide
 
-## Build Pipeline
+## Canonical Sources
 
-- Use the repository’s native build tools and package manager.
-- Separate debug, profiling, and release builds.
-- Preserve symbols or source maps for crash diagnosis.
-- Cache dependencies carefully without hiding clean-build failures.
-- Run unit and integration tests before packaging.
+Use `docs/product-definition.md` for supported platforms, release gates, and alpha non-negotiables. Use QA results and documentation skill output for release notes and onboarding.
 
-## Packaging
+## Target Platforms
 
-- Define target OS versions and CPU architectures.
-- Include required runtime assets, presets, examples, and default sessions if in scope.
-- Handle audio/MIDI permissions where the platform requires them.
-- Keep installer/update behavior simple for private alpha.
+MVP targets cross-platform desktop builds:
 
-## Versioning
+- macOS,
+- Windows,
+- Linux.
 
-- Use consistent semantic or date-based versioning.
-- Embed version, commit, build date, and channel in the app where possible.
-- Tag release artifacts or otherwise make builds traceable.
+Release readiness is gated per platform because audio, MIDI, permissions, packaging, and device behavior differ.
 
-## Crash Reporting
+## Release Gates
 
-- Capture crashes, fatal errors, and relevant diagnostics.
-- Avoid collecting sensitive user content unless explicitly approved.
-- Ensure reporting does not run on audio or MIDI real-time paths.
-- Provide a way to correlate alpha user reports with builds.
+A platform is not release-ready until:
 
-## Alpha Release Gate
+- install and launch are verified,
+- audio/MIDI device access and reconnect behavior are tested,
+- no known reproducible audio dropout exists in the intended alpha workflow,
+- no known destructive save/load issue exists,
+- required permissions/device steps are documented,
+- release notes list known limitations and platform-specific caveats.
 
-- QA acceptance complete or documented exceptions approved.
-- No known reproducible audio dropout in intended use.
-- No known destructive save/load issue.
-- Installation and launch verified on target platform.
-- Release notes and onboarding notes available.
+## Build Metadata
+
+Private-alpha builds should include version, build date, commit or build identifier, and release channel where possible. Artifacts should package required runtime assets, presets, examples, and default sessions that are in MVP scope.
+
+## Diagnostics
+
+Crash reporting and fatal diagnostics must stay off audio/MIDI real-time paths. Collect enough information for alpha bug reports without compromising performance or privacy.
+
+## Release Notes And Onboarding
+
+Include version/date, highlights, fixes, known issues, testing status, upgrade/compatibility notes, platform caveats, setup steps, audio/MIDI device guidance, and bug-report diagnostics.

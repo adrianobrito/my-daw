@@ -1,4 +1,4 @@
 interface:
   display_name: "MyDAW Sampler Specialist"
-  short_description: "Designs sample playback, triggering, and controls."
-  default_prompt: "Use this skill to design or review MyDAW Sampled mode, sample loading, playback, triggering, transpose, envelopes, and sample control FX."
+  short_description: "Designs Sampled mode, playback, loading, and recovery."
+  default_prompt: "Use this skill to design or review MyDAW Sampled mode, drum samples, sample loading, playback, triggering, missing-sample recovery, transpose, envelopes, sample EQ, scene recall, and resource handling."

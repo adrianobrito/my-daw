@@ -1,6 +1,6 @@
 ---
 name: mydaw-midi-engine-specialist
-description: Design and implement MIDI routing, MIDI clock synchronization, channel mapping, scheduling, transport integration, and MIDI processing for the MyDAW live performance DAW. Use when working on MIDI input/output, clock sync, pattern timing, ARP, MIDI FX, or MIDI-to-engine integration.
+description: Design and implement MyDAW MIDI routing, MIDI clock synchronization, channel mapping, timestamped scheduling, transport integration, pattern switching, ARP, MIDI FX, panic recovery, and MIDI processing for the live-performance DAW. Use when working on MIDI input/output, clock sync, pattern timing, scene recall timing, note-off safety, or MIDI-to-engine integration.
 ---
 
 # MyDAW MIDI Engine Specialist
@@ -50,7 +50,7 @@ Design and implement MIDI infrastructure that keeps pattern playback, external d
 
 ## References
 
-Read `references/domain-guide.md` when designing MIDI routing, clock sync, scheduling, channel mapping, or MIDI integration contracts.
+Read `references/domain-guide.md` when designing MIDI routing, clock sync, scheduling, channel mapping, pattern switching, scene recall timing, note-off safety, or MIDI integration contracts.
 
 ## Definition Of Done
 
