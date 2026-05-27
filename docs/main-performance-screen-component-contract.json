@@ -1,0 +1,397 @@
+{
+  "artifact": "main-performance-screen-component-contract",
+  "version": 1,
+  "sourceIssue": 7,
+  "screen": {
+    "name": "Main Performance Screen",
+    "purpose": "Operate a prepared live-performance session from one persistent surface.",
+    "layoutOrder": [
+      "performanceShell",
+      "drums",
+      "synths",
+      "postFx",
+      "masterFx"
+    ],
+    "nonGoals": [
+      "landingPage",
+      "setupWizard",
+      "arrangementTimeline",
+      "deepControllerMapping",
+      "advancedSampleEditor"
+    ]
+  },
+  "sharedEnums": {
+    "uiState": [
+      "inactive",
+      "active",
+      "armed",
+      "pending",
+      "muted",
+      "soloed",
+      "bypassed",
+      "disabled",
+      "loading",
+      "missing-resource",
+      "error"
+    ],
+    "activityState": [
+      "noSignal",
+      "active",
+      "peak",
+      "clipping",
+      "muted",
+      "disabled",
+      "error"
+    ],
+    "applyTiming": [
+      "immediate",
+      "nextStep",
+      "quantized",
+      "async"
+    ],
+    "density": [
+      "expanded",
+      "compact",
+      "collapsed"
+    ],
+    "tone": [
+      "neutral",
+      "transport",
+      "midi",
+      "synth",
+      "fx",
+      "master",
+      "warning",
+      "error"
+    ]
+  },
+  "components": {
+    "performanceShell": {
+      "requiredData": [
+        "transportState",
+        "tempoBpm",
+        "timeSignature",
+        "sceneStatus",
+        "cpuStatus",
+        "masterOutputStatus",
+        "deviceStatus",
+        "panicAvailable"
+      ],
+      "variants": [
+        "idle",
+        "playing",
+        "pendingScene",
+        "degraded",
+        "error"
+      ],
+      "requiredControls": [
+        "menu",
+        "play",
+        "stop",
+        "tapTempo",
+        "sceneSelector",
+        "settings",
+        "panicAllNotesOff"
+      ],
+      "rules": [
+        "Remain visible during main performance workflows.",
+        "Do not hide transport, scene, CPU, master output, or panic behind section content.",
+        "Show global failures and link or point to affected section scope."
+      ]
+    },
+    "sectionHeader": {
+      "requiredData": [
+        "sectionName",
+        "density",
+        "uiState",
+        "activityState",
+        "aggregateBadges"
+      ],
+      "variants": [
+        "default",
+        "active",
+        "collapsed",
+        "pending",
+        "warning",
+        "error"
+      ],
+      "requiredControls": [
+        "collapseToggle"
+      ],
+      "optionalControls": [
+        "mute",
+        "bypass",
+        "menu"
+      ],
+      "rules": [
+        "Header height remains stable across variants.",
+        "Collapsed headers preserve live-critical status.",
+        "Error and missing-resource states override local section tone."
+      ]
+    },
+    "modeSelector": {
+      "requiredData": [
+        "options",
+        "activeOptionId",
+        "pendingOptionId",
+        "disabledOptionIds",
+        "applyTiming"
+      ],
+      "variants": [
+        "tabs",
+        "segmented",
+        "compact"
+      ],
+      "rules": [
+        "Active and pending states must be visually different.",
+        "Unavailable expected modes remain visible as disabled.",
+        "Do not use hidden dropdowns for high-frequency mode switching."
+      ]
+    },
+    "moduleCard": {
+      "requiredData": [
+        "moduleId",
+        "name",
+        "type",
+        "uiState",
+        "activityState",
+        "sourceLabel"
+      ],
+      "optionalData": [
+        "presetName",
+        "midiChannel",
+        "routeLabel",
+        "badges",
+        "meter"
+      ],
+      "variants": [
+        "instrument",
+        "source",
+        "processor",
+        "compact",
+        "expanded"
+      ],
+      "requiredControls": [
+        "menu"
+      ],
+      "optionalControls": [
+        "mute",
+        "solo",
+        "bypass",
+        "expand"
+      ],
+      "rules": [
+        "Use one card level only.",
+        "Meters and changing values must not resize the card.",
+        "Missing resources appear on the affected module, not only globally."
+      ]
+    },
+    "patternEnginePanel": {
+      "requiredData": [
+        "activePatternMode",
+        "pendingPatternMode",
+        "applyTiming",
+        "uiState"
+      ],
+      "modeControls": {
+        "midiGeneration": [
+          "density",
+          "complexity",
+          "variation",
+          "length"
+        ],
+        "midiCircularPattern": [
+          "steps",
+          "stepPreview",
+          "swing"
+        ]
+      },
+      "rules": [
+        "Keep active pattern mode visible.",
+        "Show pending mode until engine confirmation.",
+        "Step previews reserve fixed width."
+      ]
+    },
+    "fxSlot": {
+      "requiredData": [
+        "slotId",
+        "processorName",
+        "order",
+        "uiState",
+        "bypassState"
+      ],
+      "optionalData": [
+        "macroControls",
+        "meter",
+        "routeHint"
+      ],
+      "variants": [
+        "instrumentPost",
+        "master",
+        "compact",
+        "empty"
+      ],
+      "requiredControls": [
+        "bypass"
+      ],
+      "rules": [
+        "Bypassed processors remain visible in chain position.",
+        "Order is visible through flow or position.",
+        "Limiter or clipping warnings override normal master tone."
+      ]
+    },
+    "meter": {
+      "requiredData": [
+        "type",
+        "activityState"
+      ],
+      "types": [
+        "audioLevel",
+        "midiActivity",
+        "cpu",
+        "clip",
+        "routeActivity"
+      ],
+      "rules": [
+        "Reserve fixed dimensions.",
+        "Clipping is distinct from normal peak activity.",
+        "Meter updates do not drive audio or MIDI timing."
+      ]
+    }
+  },
+  "sections": {
+    "drums": {
+      "tone": "midi",
+      "requiredComponents": [
+        "sectionHeader",
+        "modeSelector",
+        "moduleCard",
+        "patternEnginePanel",
+        "meter"
+      ],
+      "sourceModes": [
+        "MIDI",
+        "Sampled"
+      ],
+      "defaultModules": [
+        "Drum Synth",
+        "Drum MIDI",
+        "Sampled Preview"
+      ],
+      "collapseSummary": [
+        "activeSourceMode",
+        "activityState",
+        "muteState",
+        "pendingState",
+        "missingResourceState",
+        "errorState"
+      ]
+    },
+    "synths": {
+      "tone": "synth",
+      "requiredComponents": [
+        "sectionHeader",
+        "moduleCard",
+        "patternEnginePanel",
+        "meter"
+      ],
+      "lanes": [
+        "Bass Synth",
+        "Poly/Chord Synth",
+        "Pluck/Stab Synth"
+      ],
+      "perLaneControls": [
+        "patternMode",
+        "arp",
+        "midiFx",
+        "solo",
+        "mute",
+        "expand"
+      ],
+      "collapseSummary": [
+        "laneIdentity",
+        "activePatternMode",
+        "activityState",
+        "soloState",
+        "muteState",
+        "pendingState",
+        "errorState"
+      ]
+    },
+    "postFx": {
+      "tone": "fx",
+      "requiredComponents": [
+        "sectionHeader",
+        "fxSlot",
+        "meter"
+      ],
+      "chain": [
+        "Instrument/Post Layer",
+        "Compressor",
+        "Reverb",
+        "Delay",
+        "Post Level"
+      ],
+      "collapseSummary": [
+        "aggregateBypassState",
+        "activityState",
+        "postLevel",
+        "warningState",
+        "errorState"
+      ]
+    },
+    "masterFx": {
+      "tone": "master",
+      "requiredComponents": [
+        "sectionHeader",
+        "fxSlot",
+        "meter"
+      ],
+      "chain": [
+        "Master EQ",
+        "Glue Compressor",
+        "Stereo Width",
+        "Limiter",
+        "Master Level",
+        "Master Output"
+      ],
+      "collapseSummary": [
+        "chainBypassState",
+        "limiterState",
+        "clipState",
+        "masterLevel",
+        "outputActivityState"
+      ]
+    }
+  },
+  "responsive": {
+    "wide": {
+      "minWidthPx": 1440,
+      "behavior": "Full density, multi-column rows, horizontal FX chains."
+    },
+    "standard": {
+      "minWidthPx": 1024,
+      "maxWidthPx": 1439,
+      "behavior": "Preserve all sections and controls, reduce graph detail before hiding controls."
+    },
+    "compact": {
+      "minWidthPx": 768,
+      "maxWidthPx": 1023,
+      "behavior": "Stack section internals while preserving shell and section order."
+    },
+    "minimum": {
+      "maxWidthPx": 767,
+      "behavior": "Support inspection and basic operation only; do not claim full live-performance readiness."
+    }
+  },
+  "acceptance": [
+    "Global shell exposes transport, tempo, time signature, scene, CPU, master output, device/settings, and panic.",
+    "Drums exposes MIDI/Sampled source mode, source modules, pattern engine, and sampled states.",
+    "Synths exposes Bass, Poly/Chord, and Pluck/Stab lanes with pattern, ARP, MIDI FX, solo, mute, expand, and activity state.",
+    "Post-FX and Master FX expose ordered chains with bypass, meters, levels, and output safety.",
+    "Active and pending modes are visually distinct.",
+    "Collapsed sections preserve critical live state.",
+    "Scene recall shows current, target, pending, applied, blocked, and failed states.",
+    "Muted, soloed, bypassed, loading, missing-resource, degraded, and error states are visible at actionable scope."
+  ]
+}
