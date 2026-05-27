@@ -8,6 +8,7 @@ Source inputs:
 - `docs/design-system.md`
 - `docs/main-performance-screen.md`
 - `docs/module-states.md`
+- `docs/pattern-mode-selector.md`
 - `docs/my-daw-prototype.png`
 
 The IA uses the design system's MVP state names and dense, stage-readable layout guidance as implementation constraints.
@@ -175,6 +176,7 @@ The MVP does not include a separate arrangement screen, timeline-first view, lan
 
 - Drums exposes MIDI and Sampled source modes at the section level.
 - Pattern surfaces expose MIDI Generation and MIDI Circular Pattern modes at the lane or pattern level.
+- The pattern mode selector contract is defined in `docs/pattern-mode-selector.md`; this IA only defines where the selector appears.
 - Active mode is always visually distinct from available modes.
 - Pending mode changes are visible when they apply at a step, bar, scene, or other quantized boundary.
 - Unavailable modes remain discoverable only when the performer can understand why they are unavailable.
