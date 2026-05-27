@@ -8,6 +8,8 @@ Source inputs:
 - `docs/information-architecture.md`
 - `docs/design-system.md`
 - `docs/pattern-mode-selector.md`
+- `docs/scene-set-workflow.md`
+- `docs/scene-set-workflow-component-contract.json`
 - `docs/my-daw-prototype.png`
 
 The main performance screen is the first usable surface. It is not a landing page, setup wizard, arrangement timeline, or mode hub.
@@ -105,6 +107,7 @@ Interaction rules:
 - Tap tempo remains available during transport.
 - Scene selection opens a compact selector; selecting a scene creates a pending recall when quantized.
 - Device/settings surfaces return to this screen without resetting section expansion state.
+- Detailed scene/set recall, save/load, autosave, and recovery behavior follows `docs/scene-set-workflow.md`.
 
 ## Drums Section
 
@@ -319,6 +322,8 @@ The main screen uses these design-system components:
 | Performance Shell | Fixed top shell | idle, playing, pendingScene, degraded, error |
 | Transport Control | Shell | play, stop, tap, disabled, error |
 | Scene Status | Shell | current, pending, applied, failed, disabled |
+| Scene Selector Panel | Shell overlay or side panel | expanded, compact, recovery |
+| Set Session Surface | Session menu or first-level panel | ready, loading, validating, saving, autosaved, recoverable, error |
 | CPU Meter | Shell | active, warning, error |
 | Master Output Meter | Shell and Master FX | noSignal, active, peak, clipping, muted, error |
 | Section Header | Every section | default, active, collapsed, pending, warning, error |

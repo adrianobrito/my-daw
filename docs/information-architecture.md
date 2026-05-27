@@ -9,6 +9,8 @@ Source inputs:
 - `docs/main-performance-screen.md`
 - `docs/module-states.md`
 - `docs/pattern-mode-selector.md`
+- `docs/scene-set-workflow.md`
+- `docs/scene-set-workflow-component-contract.json`
 - `docs/my-daw-prototype.png`
 
 The IA uses the design system's MVP state names and dense, stage-readable layout guidance as implementation constraints.
@@ -130,20 +132,25 @@ Master FX may appear as a dedicated lower section or as the second lane inside t
 
 Scenes and sessions are supporting surfaces for performance continuity.
 
+The detailed scene/set behavior, persistence boundaries, recall states, and recovery rules are defined in `docs/scene-set-workflow.md`. This IA owns where those surfaces appear in the hierarchy; the scene/set workflow spec owns how recall, save/load, autosave, and recovery behave.
+
 Required scene IA:
 
 - Current scene remains visible in the shell.
 - Scene selector is reachable from the shell.
+- Ordered set scene list is reachable without replacing the performance shell.
 - Pending scene recall is visible before apply.
 - Applied scene is visible after quantized recall.
 - Failed or partially blocked recall is visible and structured.
 - Recall timing communicates immediate, next-step, or quantized-boundary behavior where relevant.
+- Affected Drums, Synths, Post-FX, and Master FX scopes show scene-driven pending and failure states.
 
 Required session IA:
 
 - Load, save, save-as, autosave recovery, and recent sessions are reachable from first-level navigation or settings.
 - Session load cannot replace the main screen until validation has either succeeded or produced actionable errors.
 - Missing samples, devices, presets, or routes are shown on the affected section or lane and summarized globally.
+- Autosave recovery is distinguishable from intentional saved sessions.
 
 ## Main-Screen Ordering
 

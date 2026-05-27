@@ -93,10 +93,62 @@
         "settings",
         "panicAllNotesOff"
       ],
+      "contractRefs": [
+        "docs/scene-set-workflow-component-contract.json#/components/sceneStatus"
+      ],
       "rules": [
         "Remain visible during main performance workflows.",
         "Do not hide transport, scene, CPU, master output, or panic behind section content.",
         "Show global failures and link or point to affected section scope."
+      ]
+    },
+    "sceneSelectorPanel": {
+      "contractRef": "docs/scene-set-workflow-component-contract.json#/components/sceneSelectorPanel",
+      "requiredData": [
+        "setId",
+        "setName",
+        "sceneOrder",
+        "currentSceneId",
+        "selectedSceneId",
+        "pendingSceneId",
+        "defaultApplyBoundary",
+        "sessionLifecycleState"
+      ],
+      "variants": [
+        "expanded",
+        "compact",
+        "recovery"
+      ],
+      "rules": [
+        "Open from the shell without replacing the performance shell.",
+        "Show ordered set scenes, target scene, recall boundary, and affected scopes.",
+        "Expose blocked, failed, and partial recovery states through scoped recovery."
+      ]
+    },
+    "setSessionSurface": {
+      "contractRef": "docs/scene-set-workflow-component-contract.json#/components/setSessionSurface",
+      "requiredData": [
+        "sessionId",
+        "sessionName",
+        "schemaVersion",
+        "sessionLifecycleState",
+        "lastSavedAt",
+        "autosaveAvailable",
+        "validationIssues"
+      ],
+      "variants": [
+        "ready",
+        "loading",
+        "validating",
+        "saving",
+        "autosaved",
+        "recoverable",
+        "error"
+      ],
+      "rules": [
+        "Validate session load before replacing active live state.",
+        "Represent save and autosave as async state.",
+        "Do not imply persistence work on audio or MIDI real-time paths."
       ]
     },
     "sectionHeader": {
@@ -410,6 +462,8 @@
   },
   "acceptance": [
     "Global shell exposes transport, tempo, time signature, scene, CPU, master output, device/settings, and panic.",
+    "Scene selector exposes ordered set scenes, target scene, recall boundary, affected scopes, and scoped recovery.",
+    "Session load, save, autosave, validation, and recovery states are represented as async non-real-time-path lifecycle state.",
     "Drums exposes MIDI/Sampled source mode, source modules, pattern engine, and sampled states.",
     "Synths exposes Bass, Poly/Chord, and Pluck/Stab lanes with pattern, ARP, MIDI FX, solo, mute, expand, and activity state.",
     "Post-FX and Master FX expose ordered chains with bypass, meters, levels, and output safety.",
