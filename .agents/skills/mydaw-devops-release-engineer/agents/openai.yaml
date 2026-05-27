@@ -1,4 +1,4 @@
 interface:
   display_name: "MyDAW DevOps Release Engineer"
-  short_description: "Builds packages, CI, crash reporting, and alpha releases."
-  default_prompt: "Use this skill to configure or review MyDAW build pipelines, packaging, versioning, crash reporting, deployment, and private alpha releases."
+  short_description: "Handles cross-platform builds, packages, diagnostics, and alpha gates."
+  default_prompt: "Use this skill to configure or review MyDAW CI, installers, release artifacts, version metadata, crash diagnostics, platform readiness, release gates, alpha distribution, and release notes inputs."

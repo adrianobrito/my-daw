@@ -1,42 +1,30 @@
 # Synth Integration Guide
 
-## Module Roles
+## Canonical Sources
 
-- Bass Synth: monophonic or limited-voice low-end instrument with stable pitch, glide if included, filter, envelope, and drive or tone macro.
-- Poly / Chord Synth: harmonic instrument with polyphony, chord handling, voicing constraints, envelope, filter, and tone controls.
-- Pluck / Stab Synth: short transient-focused synth for rhythmic hooks, stabs, and arpeggiated material.
+Use `docs/product-definition.md`, `docs/main-performance-screen.md`, `docs/module-states.md`, `docs/pattern-mode-selector.md`, and `docs/scene-set-workflow.md` for synth lanes, pattern inputs, visible states, and scene recall.
 
-## MVP Controls
+## MVP Synth Lanes
 
-Prefer performable macro controls:
+Synths contains:
 
-- preset
-- gain
-- filter cutoff/resonance
-- envelope shape
-- tone or brightness
-- drive or character
-- glide for bass if supported
-- chord/voicing control for Poly/Chord
-- decay or pluck shape for Pluck/Stab
+- Bass Synth for low-end pattern and groove support.
+- Poly/Chord Synth for harmonic beds and chord movement.
+- Pluck/Stab Synth for short melodic or rhythmic accents.
 
-Avoid exposing deep synthesis pages unless required by the MVP.
+Each lane exposes identity, preset/source label, MIDI channel or route, activity meter, pattern mode, ARP, MIDI FX, solo, mute, and expand/collapse.
 
-## MIDI Integration
+## Integration Rules
 
-- Define playable note ranges and default channels.
-- Specify mono, poly, legato, glide, voice stealing, and note priority behavior.
-- Handle note-off safety during preset changes, scene recall, mute, and transport stop.
-- Support pattern-generated events and external MIDI consistently.
+- Connect synth note behavior to timestamped MIDI/pattern events, not UI timing.
+- Route each synth through assigned Post-FX, then Master FX, then output.
+- Keep MVP controls macro-level and stage-friendly before adding deep synth editing.
+- Preset and scene recall must preserve note-off safety and avoid unsafe real-time work.
 
-## Presets
+## States
 
-- Presets must include synth parameters, macro values, and any module-specific mode.
-- Scene recall may reference presets or capture overridden values; define precedence.
-- Preset switching during playback should avoid clicks, CPU spikes, and stuck notes.
+Instrument lanes expose `active`, `muted`, `soloed`, `pending`, `loading`, `missing-resource`, and `error`. Collapsed lanes preserve preset/source, MIDI channel, active pattern mode, meter/activity, mute, solo, pending, and errors.
 
-## Routing And FX
+## QA Focus
 
-- Synths route to their Post-FX chains, then Master FX.
-- Bypass and mute behavior must be consistent with sampler and drums.
-- Metering should expose activity even for short plucks and stabs.
+Test dense MIDI, stuck-note prevention, preset switching, pattern mode switching, scene recall, voice limits, CPU load, and routing through FX.

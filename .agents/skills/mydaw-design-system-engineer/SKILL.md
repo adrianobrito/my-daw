@@ -1,6 +1,6 @@
 ---
 name: mydaw-design-system-engineer
-description: Maintain reusable UI components, visual tokens, and interaction consistency for the MyDAW live performance DAW. Use when defining colors, spacing, typography, icons, cards, knobs, meters, selectors, headers, module components, or component usage documentation.
+description: Maintain MyDAW reusable UI components, visual tokens, state vocabulary, component contracts, responsive rules, and interaction consistency for the live-performance DAW. Use when defining colors, spacing, typography, icons, cards, knobs, meters, selectors, headers, module states, scene status, or component usage documentation from the canonical design docs.
 ---
 
 # MyDAW Design System Engineer
@@ -47,7 +47,7 @@ Maintain a practical design system that makes MyDAW consistent, readable on stag
 
 ## References
 
-Read `references/domain-guide.md` when defining tokens, state variants, module components, or UI consistency rules.
+Read `references/domain-guide.md` when defining tokens, state variants, module components, component contracts, responsive behavior, accessibility, or UI consistency rules.
 
 ## Definition Of Done
 

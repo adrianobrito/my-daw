@@ -1,6 +1,6 @@
 ---
 name: mydaw-documentation-writer
-description: Create user documentation, developer architecture docs, module behavior docs, MIDI and FX workflow docs, alpha onboarding notes, and release notes for the MyDAW live performance DAW. Use when writing or updating product docs, developer docs, module docs, onboarding, or release notes.
+description: Create and maintain MyDAW product, UX, component-contract, developer, module, workflow, alpha onboarding, and release documentation from the canonical docs folder. Use when writing or updating docs for product scope, information architecture, main performance screen behavior, design system, module states, pattern mode selection, scene/set workflow, MIDI/FX workflows, onboarding, or release notes.
 ---
 
 # MyDAW Documentation Writer
@@ -11,6 +11,8 @@ Create accurate, practical documentation that helps performers use MyDAW and hel
 
 ## Responsibilities
 
+- Maintain the docs folder as the source of truth for MyDAW MVP behavior.
+- Align docs with product-definition, IA, main-screen, design-system, module-state, pattern-selector, and scene/set workflow specs.
 - Write user guide.
 - Write developer architecture docs.
 - Document module behavior.
@@ -43,14 +45,15 @@ Create accurate, practical documentation that helps performers use MyDAW and hel
 ## Workflow
 
 1. Document actual behavior, not intended behavior that is not implemented.
-2. Write from the performer’s task first, then provide reference detail.
+2. Write from the performer's task first, then provide reference detail.
 3. Keep developer docs boundary-focused: ownership, data flow, APIs, and real-time constraints.
 4. Make known limitations explicit for alpha users.
 5. Update release notes from product scope, merged changes, QA results, and known issues.
+6. Preserve the MVP distinction between the first-screen live performance surface and deferred timeline, plugin-hosting, cloud, and deep-editor work.
 
 ## References
 
-Read `references/domain-guide.md` when writing user guides, architecture docs, module references, MIDI/FX workflows, onboarding, or release notes.
+Read `references/domain-guide.md` before writing or revising docs. It maps the canonical `docs/` files to documentation tasks and terminology.
 
 ## Definition Of Done
 

@@ -1,6 +1,6 @@
 ---
 name: mydaw-state-session-designer
-description: Design session, scene, preset, snapshot, autosave, crash recovery, and persistence behavior for the MyDAW live performance DAW. Use when defining project schemas, save/load, scene recall, preset recall, state migration, or live-safe state changes.
+description: Design MyDAW session, set, scene, preset, snapshot, autosave, crash recovery, validation, and persistence behavior from the canonical scene/set workflow contract. Use when defining project schemas, save/load, scene recall, preset recall, state migration, missing-resource recovery, or live-safe state changes.
 ---
 
 # MyDAW State Session Designer
@@ -51,7 +51,7 @@ Design persistence and recall behavior that lets performers trust sessions, scen
 
 ## References
 
-Read `references/domain-guide.md` when defining schemas, recall semantics, autosave, migration, or live-safe state changes.
+Read `references/domain-guide.md` when defining schemas, recall semantics, autosave, migration, missing-resource policy, recovery behavior, or live-safe state changes.
 
 ## Definition Of Done
 

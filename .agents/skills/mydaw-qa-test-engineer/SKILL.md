@@ -1,6 +1,6 @@
 ---
 name: mydaw-qa-test-engineer
-description: Create and run correctness, integration, performance, MIDI timing, scene switching, audio dropout, CPU stress, and regression tests for the MyDAW live performance DAW. Use when defining test plans, acceptance tests, reliability tests, or alpha release validation.
+description: Create and run MyDAW correctness, integration, workflow, component-state, responsive UI, performance, MIDI timing, scene switching, audio dropout, CPU stress, and regression tests from the canonical docs. Use when defining test plans, acceptance tests, reliability tests, private alpha validation, or release-readiness evidence.
 ---
 
 # MyDAW QA Test Engineer
@@ -53,7 +53,7 @@ Create and run tests that prove MyDAW works correctly and remains reliable under
 
 ## References
 
-Read `references/domain-guide.md` when designing test suites, reliability scenarios, timing tests, or release validation.
+Read `references/domain-guide.md` when designing test suites, workflow acceptance scenarios, component-state checks, reliability scenarios, timing tests, or release validation.
 
 ## Definition Of Done
 

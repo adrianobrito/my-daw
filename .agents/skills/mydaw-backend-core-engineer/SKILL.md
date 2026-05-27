@@ -1,6 +1,6 @@
 ---
 name: mydaw-backend-core-engineer
-description: Implement MyDAW core services, internal APIs, messaging, persistence integration, module architecture, and clean boundaries between UI, engine, and state layers. Use when designing backend services, frontend-engine bridges, command buses, persistence APIs, or module/plugin boundaries.
+description: Implement MyDAW core services, internal APIs, command/event/query messaging, persistence integration, module architecture, and clean boundaries between UI, engine, state, and real-time layers from the canonical contracts. Use when designing backend services, frontend-engine bridges, command buses, scene/session APIs, persistence APIs, or module boundaries.
 ---
 
 # MyDAW Backend Core Engineer
@@ -52,7 +52,7 @@ Implement the application core and integration layer that connects UI, state, au
 
 ## References
 
-Read `references/domain-guide.md` when designing internal services, command/event APIs, persistence integration, module lifecycle, or layer boundaries.
+Read `references/domain-guide.md` when designing internal services, command/event APIs, state snapshots, persistence integration, module lifecycle, real-time-safe handoffs, or layer boundaries.
 
 ## Definition Of Done
 

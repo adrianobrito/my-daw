@@ -1,6 +1,6 @@
 ---
 name: mydaw-ux-ui-designer
-description: Design the main live-performance interface, screen flows, grouping logic, and interaction behavior for the MyDAW live performance DAW. Use when planning Drums, Synths, Post-FX, Master FX, MIDI vs Sampled modes, pattern mode selection, or stage-friendly controls.
+description: Design the MyDAW main live-performance interface, information architecture, screen flows, grouping logic, interaction behavior, scene/set surfaces, and stage-friendly controls from the canonical UX docs. Use when planning Drums, Synths, Post-FX, Master FX, MIDI vs Sampled modes, pattern mode selection, scene recall, collapsed states, or status visibility.
 ---
 
 # MyDAW UX UI Designer
@@ -49,7 +49,7 @@ Design the live-performance interface and interaction model so performers can un
 
 ## References
 
-Read `references/domain-guide.md` when designing screen hierarchy, live control behavior, responsive layout, or state feedback.
+Read `references/domain-guide.md` when designing screen hierarchy, live control behavior, responsive layout, state feedback, scene/set surfaces, or pattern mode selection.
 
 ## Definition Of Done
 

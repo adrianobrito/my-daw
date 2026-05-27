@@ -1,4 +1,4 @@
 interface:
   display_name: "MyDAW Product Architect"
-  short_description: "Defines MVP scope and live-performance product priorities."
-  default_prompt: "Use this skill to define or review MyDAW product scope, MVP requirements, feature priority, and live-performance acceptance criteria."
+  short_description: "Defines MVP scope, platforms, and live-performance product constraints."
+  default_prompt: "Use this skill to define or review MyDAW product scope, MVP requirements, feature priority, supported platforms, non-negotiables, and live-performance acceptance criteria."

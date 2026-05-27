@@ -1,4 +1,4 @@
 interface:
   display_name: "MyDAW Backend Core Engineer"
-  short_description: "Builds core services, APIs, and integration boundaries."
-  default_prompt: "Use this skill to design or review MyDAW backend services, internal messaging, persistence APIs, module architecture, and UI-engine boundaries."
+  short_description: "Builds core services, commands, snapshots, and layer boundaries."
+  default_prompt: "Use this skill to design or review MyDAW backend services, frontend-engine bridges, command/event/query APIs, state snapshots, persistence integration, scene/session APIs, module lifecycle, and real-time-safe boundaries."

@@ -1,4 +1,4 @@
 interface:
   display_name: "MyDAW Frontend Engineer"
-  short_description: "Builds live UI and engine bindings."
-  default_prompt: "Use this skill to implement or review MyDAW frontend screens, module controls, meters, selectors, and UI-to-engine state bindings."
+  short_description: "Builds the canonical live UI and engine/state bindings."
+  default_prompt: "Use this skill to implement or review MyDAW performance shell, Drums, Synths, Post-FX, Master FX, module cards, meters, pattern selectors, scene/session surfaces, and UI-to-engine bindings."

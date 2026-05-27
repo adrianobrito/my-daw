@@ -1,6 +1,6 @@
 ---
 name: mydaw-product-architect
-description: Define product vision, MVP scope, feature boundaries, live-performance workflows, and delivery priorities for the MyDAW live performance DAW. Use when shaping requirements, deciding feature priority, clarifying MVP vs non-MVP behavior, or validating that a proposed feature supports live performance.
+description: Define MyDAW product vision, MVP scope, feature boundaries, live-performance workflows, delivery priorities, supported platforms, and non-negotiable reliability constraints from the canonical docs. Use when shaping requirements, deciding feature priority, clarifying MVP vs non-MVP behavior, or validating that a proposed feature supports solo electronic live performance.
 ---
 
 # MyDAW Product Architect
@@ -49,7 +49,7 @@ Define the product direction for a streamlined live performance DAW centered on 
 
 ## References
 
-Read `references/domain-guide.md` when defining or revising MVP scope, feature priority, workflow boundaries, or product acceptance criteria.
+Read `references/domain-guide.md` when defining or revising MVP scope, feature priority, workflow boundaries, platform requirements, reliability non-negotiables, or product acceptance criteria.
 
 ## Definition Of Done
 

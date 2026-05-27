@@ -1,55 +1,40 @@
 # Design System Guide
 
-## Token Priorities
+## Canonical Sources
 
-- Use a restrained operational palette with clear accent colors for active, armed, warning, error, bypassed, muted, soloed, and pending states.
-- Define spacing that supports dense scan-friendly layouts.
-- Keep typography legible at stage distance; avoid viewport-scaled text.
-- Use consistent focus rings for keyboard and controller workflows.
-- Keep card radius at 8px or less unless the application later establishes a different system.
+Use `docs/design-system.md` and `docs/module-states.md` first. Use `docs/main-performance-screen.md`, `docs/pattern-mode-selector.md`, and `docs/scene-set-workflow.md` for placement and component contracts.
 
-## Core Components
+## Visual Direction
 
-- Module card: title, type, active state, meter, mute/solo/bypass controls, collapse affordance, and primary parameters.
-- Section header: section name, aggregate state, add/select actions, and collapse state.
-- Mode selector: mutually exclusive state, disabled states, and pending transition state.
-- Knob/slider: value display, range, default marker, automation/modulation indicator if needed.
-- Meter: peak/RMS or activity mode, clipping state, and no-signal state.
-- FX slot: name, bypass, order, macro controls, routing hint.
+MyDAW is a dense, operational stage interface. Prefer high-contrast dark surfaces, stable dimensions, clear state markers, and scan-friendly section bands. Do not use decorative page sections, nested cards, landing-page composition, or hidden live-critical controls.
 
-## State Model
+## Shared State Vocabulary
 
-Design visible states for:
+Use these names consistently in specs, props, QA, and docs:
 
-- inactive
-- active
-- armed
-- pending
-- muted
-- soloed
-- bypassed
-- disabled
-- loading
-- missing-resource
-- error
+`inactive`, `active`, `armed`, `pending`, `muted`, `soloed`, `bypassed`, `disabled`, `loading`, `missing-resource`, `error`.
 
-Use state names consistently across UX specs, frontend props, tests, and docs.
+Precedence:
 
-## Component Rules
+`error > missing-resource > loading > pending > soloed > muted > bypassed > armed > active > inactive > disabled`.
 
-- Do not make nested cards for page sections; reserve cards for modules and repeated items.
-- Avoid layout shifts from meters, labels, changing values, or hover states.
-- Ensure text fits inside controls at narrow widths.
-- Keep control labels short and domain-specific.
-- Provide compact variants for collapsed sections that still expose status.
+Scene recall states:
 
-## Documentation Expectations
+`current`, `selected`, `armed`, `pending`, `queued`, `applying`, `applied`, `blocked`, `failed`, `partialRecoverable`.
 
-For each component, document:
+## Component Responsibilities
 
-- purpose
-- required props or data
-- variants
-- state behavior
-- accessibility notes
-- examples of valid placement
+- Performance Shell: global readiness, transport, scene, CPU, master output, device/settings, panic.
+- Section Header: aggregate state and collapse for Drums, Synths, Post-FX, Master FX.
+- Module Card: identity, metadata, state strip, meter, live controls, recovery affordance.
+- Pattern Mode Selector: Generation/Circular options with active, pending, disabled, loading, missing-resource, and error states.
+- Scene Status and Scene Selector: current/target scene, boundary, affected scopes, blocked/failed recovery.
+- Set Session Surface: load/save/autosave/recovery lifecycle without implying real-time-path work.
+
+## Implementation Constraints
+
+- Reserve fixed dimensions for meters, badges, selectors, values, and long names.
+- Color is never the only signal for state.
+- Icon-only controls need accessible names and tooltips.
+- Critical controls use at least 36 x 36 px targets; secondary compact controls use at least 28 x 28 px.
+- Component props should map to `uiState`, `activityState`, `applyTiming`, `sceneRecallState`, `sessionLifecycleState`, `density`, and `tone`.

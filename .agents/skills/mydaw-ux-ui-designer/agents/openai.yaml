@@ -1,4 +1,4 @@
 interface:
-  display_name: "MyDAW UX/UI Designer"
-  short_description: "Designs stage-friendly DAW flows and controls."
-  default_prompt: "Use this skill to design MyDAW live-performance screens, section grouping, mode selection, and interaction behavior."
+  display_name: "MyDAW UX UI Designer"
+  short_description: "Designs the main performance surface and live interaction flows."
+  default_prompt: "Use this skill to design or review MyDAW screen hierarchy, performance shell, Drums, Synths, Post-FX, Master FX, scene recall, pattern mode selection, collapsed states, and stage-friendly controls."
