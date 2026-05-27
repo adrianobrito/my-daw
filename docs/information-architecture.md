@@ -6,6 +6,7 @@ Source inputs:
 
 - `docs/product-definition.md`
 - `docs/design-system.md`
+- `docs/main-performance-screen.md`
 - `docs/module-states.md`
 - `docs/my-daw-prototype.png`
 
@@ -148,6 +149,8 @@ Required session IA:
 The MVP main screen order is:
 
 `Shell -> Drums -> Synths -> Post-FX -> Master FX`
+
+The detailed screen-level behavior, responsive layout, interaction flows, and component inventory are defined in `docs/main-performance-screen.md`. This IA remains the hierarchy source of truth; the main screen spec is the implementation-ready artifact for issue #7.
 
 The shell remains fixed or otherwise persistently available. Drums, Synths, Post-FX, and Master FX follow a top-to-bottom signal and performance flow:
 

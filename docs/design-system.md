@@ -5,6 +5,9 @@ This document defines the MVP design system for MyDAW, a stage-ready live-perfor
 Source inputs:
 
 - `product-definition.md`
+- `information-architecture.md`
+- `main-performance-screen.md`
+- `main-performance-screen-component-contract.json`
 - `my-daw-prototype.png`
 - `module-states.md`
 - `skills/mydaw-design-system-engineer`
