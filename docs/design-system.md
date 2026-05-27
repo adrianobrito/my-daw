@@ -12,6 +12,8 @@ Source inputs:
 - `module-states.md`
 - `pattern-mode-selector.md`
 - `pattern-mode-selector-component-contract.json`
+- `scene-set-workflow.md`
+- `scene-set-workflow-component-contract.json`
 - `skills/mydaw-design-system-engineer`
 - `skills/mydaw-ux-ui-designer`
 - `skills/mydaw-frontend-engineer`
@@ -408,16 +410,23 @@ Purpose: Show current scene and recall state.
 Required content:
 
 - Current scene number and name.
+- Target scene number and name when recall is pending.
 - Recall menu or selector.
-- Pending scene indicator.
+- Pending boundary indicator.
 - Failed recall state when applicable.
 
 States:
 
 - `current`
+- `selected`
+- `armed`
 - `pending`
+- `queued`
+- `applying`
 - `applied`
+- `blocked`
 - `failed`
+- `partialRecoverable`
 - `disabled`
 
 Rules:
@@ -425,6 +434,64 @@ Rules:
 - Pending recall shows both current scene and target scene where space allows.
 - Failed recall identifies affected scope when available.
 - Scene status must remain visible while transport is playing.
+- Scene status follows the detailed state and command contract in `scene-set-workflow.md`.
+
+### Scene Selector Panel
+
+Purpose: Present the ordered performance set and recallable scenes without leaving the main performance surface.
+
+Required content:
+
+- Set name.
+- Ordered scene rows.
+- Current, selected, pending, blocked, failed, and partial recovery markers.
+- Recall boundary for the selected or pending scene.
+- Affected-scope summary for scene changes.
+- Recovery entry when a scene cannot recall safely.
+
+Variants:
+
+- `expanded`: Side panel or overlay with scene rows and recovery details.
+- `compact`: Narrow panel with scene number, name, status, boundary, and warning badge.
+- `recovery`: Failed or blocked recall details with scoped actions.
+
+Rules:
+
+- The panel must not hide transport, master output, CPU, panic, or current scene state.
+- Scene rows keep stable height across status changes.
+- Current and pending scenes must be visually distinct.
+- Destructive scene edits require confirmation; recall and next/previous scene do not.
+- Long scene names truncate with tooltip support.
+
+### Set Session Surface
+
+Purpose: Load, save, autosave, and recover sessions containing sets, scenes, presets, resources, routes, and device preferences.
+
+Required content:
+
+- Session name and save state.
+- Load, save, save as, and recent sessions.
+- Autosave recovery availability.
+- Validation and migration issues.
+- Missing resource, missing device, broken route, or unsupported version summaries.
+
+States:
+
+- `empty`
+- `loading`
+- `validating`
+- `ready`
+- `saving`
+- `autosaved`
+- `recoverable`
+- `error`
+
+Rules:
+
+- Session load validates before replacing the active live session.
+- Save and autosave are async UI states and must not imply audio-thread work.
+- Autosave recovery is distinguishable from intentional saves.
+- Failed load or save preserves the current live session.
 
 ### Safety Control
 
@@ -541,6 +608,8 @@ Recommended shared concepts:
 - `uiState`: one of the state model names.
 - `activityState`: `noSignal`, `active`, `peak`, `clipping`, `disabled`, or `error`.
 - `applyTiming`: `immediate`, `nextStep`, `quantized`, or `async`.
+- `sceneRecallState`: `current`, `selected`, `armed`, `pending`, `queued`, `applying`, `applied`, `blocked`, `failed`, or `partialRecoverable`.
+- `sessionLifecycleState`: `empty`, `loading`, `validating`, `ready`, `saving`, `autosaved`, `recoverable`, or `error`.
 - `density`: `expanded`, `compact`, or `collapsed`.
 - `tone`: `neutral`, `midi`, `synth`, `fx`, `master`, `warning`, or `error`.
 
@@ -565,6 +634,8 @@ Design-system acceptance for MVP documentation and future implementation:
 - Meters show no-signal, activity, peak, clipping, muted, disabled, and error states.
 - Collapsed sections preserve critical state indicators.
 - Scene recall pending and failed states are visible while transport is playing.
+- Scene selector shows ordered set scenes, target scene, recall boundary, and affected scopes.
+- Session load, save, autosave, validation, and recovery states are represented without implying real-time-path work.
 - Panic/all-notes-off has a reliable first-level recovery path.
 - Keyboard focus is visible and follows performance order.
 - Reduced motion and disabled states remain understandable.

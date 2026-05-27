@@ -1,0 +1,449 @@
+{
+  "artifact": "scene-set-workflow-component-contract",
+  "version": 1,
+  "sourceIssue": 10,
+  "workflow": {
+    "name": "Scene And Set Workflow",
+    "purpose": "Load a prepared set, recall scenes during playback, recover from recall failures, and persist session changes safely.",
+    "nonGoals": [
+      "arrangementTimeline",
+      "fullSongSequencer",
+      "deepPresetEditor",
+      "cloudSync",
+      "collaborativeSetEditing"
+    ]
+  },
+  "sharedEnums": {
+    "sceneRecallState": [
+      "current",
+      "selected",
+      "armed",
+      "pending",
+      "queued",
+      "applying",
+      "applied",
+      "blocked",
+      "failed",
+      "partialRecoverable"
+    ],
+    "sessionLifecycleState": [
+      "empty",
+      "loading",
+      "validating",
+      "ready",
+      "saving",
+      "autosaved",
+      "recoverable",
+      "error"
+    ],
+    "applyBoundary": [
+      "immediate",
+      "nextStep",
+      "nextBar",
+      "nextPhrase",
+      "sceneBoundary",
+      "manual"
+    ],
+    "resourceState": [
+      "available",
+      "missing",
+      "fallbackAvailable",
+      "unsupported",
+      "degraded",
+      "error"
+    ],
+    "affectedScopeType": [
+      "transport",
+      "tempo",
+      "drums",
+      "synthLane",
+      "patternEngine",
+      "sampler",
+      "postFx",
+      "masterFx",
+      "route",
+      "device",
+      "preset",
+      "resource"
+    ]
+  },
+  "components": {
+    "sceneStatus": {
+      "placement": "performanceShell",
+      "requiredData": [
+        "currentSceneId",
+        "currentSceneName",
+        "targetSceneId",
+        "targetSceneName",
+        "sceneRecallState",
+        "applyBoundary",
+        "pendingCommandId",
+        "affectedScopes",
+        "lastRecallError"
+      ],
+      "variants": [
+        "current",
+        "armed",
+        "pending",
+        "queued",
+        "applying",
+        "blocked",
+        "failed",
+        "partialRecoverable"
+      ],
+      "requiredControls": [
+        "openSceneSelector"
+      ],
+      "optionalControls": [
+        "previousScene",
+        "nextScene",
+        "cancelPendingRecall",
+        "openRecallRecovery"
+      ],
+      "rules": [
+        "Remain visible while transport is playing.",
+        "Keep current scene visible until an applied snapshot confirms the target scene.",
+        "Show target scene and apply boundary for pending recall.",
+        "Show blocked, failed, and partial recovery states at shell scope and affected scope."
+      ]
+    },
+    "sceneSelectorPanel": {
+      "placement": "shellOverlayOrSidePanel",
+      "requiredData": [
+        "setId",
+        "setName",
+        "sceneOrder",
+        "currentSceneId",
+        "selectedSceneId",
+        "pendingSceneId",
+        "defaultApplyBoundary",
+        "sessionLifecycleState"
+      ],
+      "variants": [
+        "expanded",
+        "compact",
+        "recovery"
+      ],
+      "requiredControls": [
+        "selectScene",
+        "recallScene",
+        "close"
+      ],
+      "optionalControls": [
+        "captureScene",
+        "duplicateScene",
+        "renameScene",
+        "reorderScene",
+        "deleteScene"
+      ],
+      "rules": [
+        "Do not replace or hide the performance shell.",
+        "Rows preserve stable height across scene states.",
+        "Destructive scene edits require confirmation.",
+        "High-frequency recall actions do not require modal confirmation."
+      ]
+    },
+    "sceneListItem": {
+      "placement": "sceneSelectorPanel",
+      "requiredData": [
+        "sceneId",
+        "sceneIndex",
+        "sceneName",
+        "sceneRecallState",
+        "applyBoundary",
+        "affectedScopes",
+        "resourceSummary"
+      ],
+      "variants": [
+        "current",
+        "selected",
+        "pending",
+        "queued",
+        "blocked",
+        "failed"
+      ],
+      "requiredControls": [
+        "select"
+      ],
+      "optionalControls": [
+        "recall",
+        "menu"
+      ],
+      "rules": [
+        "Current and pending states must be visually different.",
+        "Blocked and failed rows expose scoped reason and recovery entry.",
+        "Long names truncate without changing row height.",
+        "Accessible name includes scene number, scene name, status, and boundary."
+      ]
+    },
+    "setSessionSurface": {
+      "placement": "sessionMenuOrFirstLevelPanel",
+      "requiredData": [
+        "sessionId",
+        "sessionName",
+        "schemaVersion",
+        "sessionLifecycleState",
+        "lastSavedAt",
+        "autosaveAvailable",
+        "validationIssues"
+      ],
+      "variants": [
+        "ready",
+        "loading",
+        "validating",
+        "saving",
+        "autosaved",
+        "recoverable",
+        "error"
+      ],
+      "requiredControls": [
+        "load",
+        "save",
+        "saveAs"
+      ],
+      "optionalControls": [
+        "recentSessions",
+        "recoverAutosave",
+        "discardRecovery"
+      ],
+      "rules": [
+        "Session load validates before replacing the active live session.",
+        "Save and autosave are represented as async lifecycle states.",
+        "Autosave recovery files are distinguishable from intentional saves.",
+        "Failed load or save does not destroy the current live session."
+      ]
+    },
+    "sceneRecallSummary": {
+      "placement": "shellAndRecoverySurface",
+      "requiredData": [
+        "commandId",
+        "currentSceneId",
+        "targetSceneId",
+        "sceneRecallState",
+        "applyBoundary",
+        "affectedScopes",
+        "blockedChanges",
+        "failedChanges",
+        "partialAppliedChanges"
+      ],
+      "variants": [
+        "pending",
+        "blocked",
+        "failed",
+        "partialRecoverable"
+      ],
+      "requiredControls": [
+        "close"
+      ],
+      "optionalControls": [
+        "retry",
+        "skipBlockedChanges",
+        "resolveResource",
+        "keepCurrentScene",
+        "acceptPartial"
+      ],
+      "rules": [
+        "Partial recall cannot be silent.",
+        "Failed recall preserves the last confirmed current scene.",
+        "Recovery actions are scoped to affected changes.",
+        "Resource resolution links back to affected modules, lanes, or routes."
+      ]
+    },
+    "autosaveRecoveryPrompt": {
+      "placement": "launchOrSessionMenu",
+      "requiredData": [
+        "recoveryId",
+        "sourceSessionId",
+        "createdAt",
+        "schemaVersion",
+        "validationIssues"
+      ],
+      "variants": [
+        "available",
+        "restored",
+        "dismissed",
+        "failed"
+      ],
+      "requiredControls": [
+        "restore",
+        "dismiss"
+      ],
+      "optionalControls": [
+        "inspect",
+        "saveCopy"
+      ],
+      "rules": [
+        "Recovery validation runs before restore.",
+        "Restoring recovery does not overwrite intentional save until performer saves.",
+        "Dismissed recovery remains distinguishable from deleted session data until cleanup policy applies."
+      ]
+    }
+  },
+  "stateBoundaries": {
+    "sessionState": [
+      "schemaVersion",
+      "setOrder",
+      "scenes",
+      "globalTempo",
+      "timeSignature",
+      "devicePreferences",
+      "moduleDefinitions",
+      "routingGraph",
+      "presetRefs",
+      "embeddedPresets",
+      "resourceRefs",
+      "lastKnownCurrentScene"
+    ],
+    "sceneState": [
+      "tempoBpm",
+      "timeSignature",
+      "sourceModes",
+      "patternStates",
+      "presetTargets",
+      "muteStates",
+      "soloStates",
+      "bypassStates",
+      "macroValues",
+      "levelTargets",
+      "routeTargets",
+      "recallBoundary"
+    ],
+    "presetState": [
+      "synthSettings",
+      "samplerSettings",
+      "fxChainSettings",
+      "patternSettings",
+      "resourceRefs"
+    ],
+    "runtimeOnlyState": [
+      "meters",
+      "cpuSnapshots",
+      "midiPlayhead",
+      "schedulerQueues",
+      "audioBuffers",
+      "hoverFocusSelection",
+      "openMenus",
+      "inFlightCommandIds",
+      "resolvedTransientErrors"
+    ]
+  },
+  "commands": {
+    "requestSceneRecall": {
+      "requiredFields": [
+        "targetSceneId",
+        "requestedBoundary",
+        "commandId"
+      ],
+      "optionalFields": [
+        "replaceCommandId",
+        "allowPartial",
+        "source"
+      ],
+      "rules": [
+        "Validate resources and state before real-time handoff.",
+        "Do not mutate current scene until an applied snapshot is published.",
+        "Bound pending recall work and reject unbounded command queues."
+      ]
+    },
+    "captureScene": {
+      "requiredFields": [
+        "sourceSnapshotId",
+        "sceneName",
+        "insertAfterSceneId",
+        "commandId"
+      ],
+      "rules": [
+        "Persist recallable state only.",
+        "Validate resource references before inserting scene into set order.",
+        "Mark session unsaved after successful capture."
+      ]
+    },
+    "loadSession": {
+      "requiredFields": [
+        "sessionUri",
+        "commandId"
+      ],
+      "rules": [
+        "Read and validate off real-time paths.",
+        "Do not replace active live session until validation succeeds or recovery is accepted.",
+        "Surface migration, missing resource, and unsupported version issues before apply."
+      ]
+    },
+    "saveSession": {
+      "requiredFields": [
+        "sessionId",
+        "targetUri",
+        "commandId"
+      ],
+      "rules": [
+        "Use atomic or equivalent safe persistence.",
+        "Do not block audio or MIDI scheduling.",
+        "Failed save preserves in-memory session state."
+      ]
+    }
+  },
+  "snapshots": {
+    "sceneRecallSnapshot": {
+      "requiredFields": [
+        "currentSceneId",
+        "targetSceneId",
+        "sceneRecallState",
+        "applyBoundary",
+        "commandId",
+        "affectedScopes",
+        "blockedChanges",
+        "failedChanges"
+      ],
+      "rules": [
+        "Snapshot is the UI source of truth for current and pending scene state.",
+        "Affected scopes map to shell, section, lane, module, route, or resource surfaces.",
+        "The UI does not infer applied scene from click timing."
+      ]
+    },
+    "sessionSnapshot": {
+      "requiredFields": [
+        "sessionId",
+        "sessionName",
+        "setId",
+        "setName",
+        "schemaVersion",
+        "sessionLifecycleState",
+        "lastSavedAt",
+        "autosaveAvailable",
+        "validationIssues"
+      ],
+      "rules": [
+        "Snapshot distinguishes intentional save from autosave recovery.",
+        "Validation issues are structured and scoped.",
+        "Runtime-only state is excluded from persisted scene state."
+      ]
+    }
+  },
+  "validation": {
+    "requiredChecks": [
+      "schemaVersionSupportedOrMigrated",
+      "stableUniqueIds",
+      "requiredResourcesAvailableOrRecoverable",
+      "devicesAndRoutesAvailableOrDegraded",
+      "fxAndRoutingPreparedOffRealtimePath",
+      "sceneChangesRepresentBoundedEngineCommands"
+    ],
+    "failurePolicy": [
+      "Unsupported schema blocks session application unless migration succeeds.",
+      "Missing resources mark affected modules, routes, scene rows, and shell summary.",
+      "Failed recall preserves the last confirmed current scene.",
+      "Partial recall is allowed only when failed changes are scoped and visible."
+    ]
+  },
+  "acceptance": [
+    "Current scene, target scene, and recall boundary are visible in the shell.",
+    "Scene selector shows ordered set scenes and does not replace the performance shell.",
+    "Scene recall distinguishes current, selected, armed, pending, queued, applying, applied, blocked, failed, and partial recoverable states.",
+    "Pending recall keeps current scene authoritative until an applied snapshot confirms the target scene.",
+    "Affected Drums, Synths, Post-FX, and Master FX scopes expose scene-driven pending and failure states.",
+    "Session, scene, preset, snapshot, and runtime-only boundaries are explicit.",
+    "Session load validates before live application.",
+    "Save, autosave, and recovery are async and off real-time paths.",
+    "Missing resources, unsupported versions, unavailable devices, broken routes, and failed recalls have scoped recovery behavior."
+  ]
+}
