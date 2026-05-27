@@ -1,0 +1,175 @@
+{
+  "artifact": "pattern-mode-selector-component-contract",
+  "version": 1,
+  "sourceIssue": 9,
+  "component": {
+    "name": "Pattern Mode Selector",
+    "purpose": "Switch a drum or synth Pattern Engine Panel between MIDI Generation and MIDI Circular Pattern while preserving clear applied, pending, disabled, and error state."
+  },
+  "patternModes": {
+    "midiGeneration": {
+      "label": "MIDI Generation",
+      "visibleLabel": "Generation",
+      "compactLabel": "Gen",
+      "controls": [
+        {
+          "id": "density",
+          "range": "0-100%",
+          "applyTiming": ["nextStep", "quantized"]
+        },
+        {
+          "id": "complexity",
+          "range": "0-100%",
+          "applyTiming": ["quantized"]
+        },
+        {
+          "id": "variation",
+          "range": "0-100%",
+          "applyTiming": ["quantized"]
+        },
+        {
+          "id": "probability",
+          "range": "0-100%",
+          "applyTiming": ["nextStep"]
+        },
+        {
+          "id": "length",
+          "values": ["1/2 Bar", "1 Bar", "2 Bars", "4 Bars"],
+          "applyTiming": ["quantized"]
+        },
+        {
+          "id": "swing",
+          "range": "0-75%",
+          "applyTiming": ["nextStep"]
+        }
+      ],
+      "requiredState": ["seed", "generationId"],
+      "optionalState": ["variationLock"]
+    },
+    "midiCircularPattern": {
+      "label": "MIDI Circular Pattern",
+      "visibleLabel": "Circular",
+      "compactLabel": "Circ",
+      "controls": [
+        {
+          "id": "steps",
+          "range": "1-64",
+          "applyTiming": ["quantized"]
+        },
+        {
+          "id": "activeSteps",
+          "range": "per-step on/off",
+          "applyTiming": ["nextStep"]
+        },
+        {
+          "id": "rotation",
+          "range": "0 to steps - 1",
+          "applyTiming": ["quantized"]
+        },
+        {
+          "id": "probability",
+          "range": "0-100%",
+          "applyTiming": ["nextStep"]
+        },
+        {
+          "id": "length",
+          "values": ["1/2 Bar", "1 Bar", "2 Bars", "4 Bars"],
+          "applyTiming": ["quantized"]
+        },
+        {
+          "id": "swing",
+          "range": "0-75%",
+          "applyTiming": ["nextStep"]
+        }
+      ],
+      "requiredState": ["stepPreview", "patternId"],
+      "optionalState": ["playheadPosition"]
+    }
+  },
+  "selector": {
+    "requiredData": [
+      "laneId",
+      "activeMode",
+      "pendingMode",
+      "pendingBoundary",
+      "uiState",
+      "disabledReason",
+      "lastError"
+    ],
+    "variants": ["segmented", "compact", "collapsedSummary"],
+    "options": ["midiGeneration", "midiCircularPattern"],
+    "uiStates": [
+      "active",
+      "pending",
+      "disabled",
+      "loading",
+      "missing-resource",
+      "error"
+    ],
+    "rules": [
+      "Render both pattern mode options at all selectable densities.",
+      "Keep the applied active mode selected until the engine publishes an applied snapshot.",
+      "Show pending target and pending boundary without resizing the selector.",
+      "Keep disabled expected modes visible with an accessible reason.",
+      "Show selector-level errors without clearing the last valid active mode."
+    ]
+  },
+  "commands": {
+    "requestPatternModeSwitch": {
+      "requiredFields": [
+        "laneId",
+        "requestedMode",
+        "requestedBoundary",
+        "commandId"
+      ],
+      "requestedModeValues": ["midiGeneration", "midiCircularPattern"],
+      "requestedBoundaryValues": [
+        "immediate",
+        "nextStep",
+        "nextBar",
+        "sceneBoundary"
+      ],
+      "rules": [
+        "UI requests mode switches but does not schedule MIDI events.",
+        "While transport is playing, default requestedBoundary is nextBar unless a lane contract narrows it.",
+        "Switch replacement requires engine confirmation before the visible pending target changes."
+      ]
+    }
+  },
+  "engineSnapshot": {
+    "requiredFields": [
+      "laneId",
+      "activeMode",
+      "pendingMode",
+      "pendingBoundary",
+      "switchId",
+      "uiState",
+      "lastError"
+    ],
+    "rules": [
+      "activeMode is the currently applied scheduling source.",
+      "pendingMode is null when no switch is waiting.",
+      "lastError is scoped to the selector or owning lane.",
+      "Snapshots are the source of truth for rendered active and pending states."
+    ]
+  },
+  "midiScheduling": {
+    "rules": [
+      "Timestamp pattern events in the engine, not from UI event timing.",
+      "Preserve note-on and note-off pairing through mode switches.",
+      "Schedule old-mode note-offs before or at the switch boundary when required.",
+      "Preserve deterministic ordering for simultaneous events.",
+      "Keep scheduler lookahead and pending switch queues bounded.",
+      "Keep panic/all-notes-off available from the shell for recovery."
+    ]
+  },
+  "acceptance": [
+    "Every Drums and Synth pattern surface exposes Generation and Circular options without a dropdown.",
+    "Active and pending modes are visually and semantically distinct.",
+    "Pending switches show their boundary and keep the last applied mode active.",
+    "Collapsed summaries preserve active mode, pending target, and error state.",
+    "Generation and Circular controls document ranges and apply timing.",
+    "The UI consumes engine snapshots and does not drive musical scheduling directly.",
+    "The contract accounts for note-off safety, deterministic ordering, bounded pending work, and panic recovery."
+  ]
+}

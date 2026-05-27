@@ -148,6 +148,28 @@
         "Do not use hidden dropdowns for high-frequency mode switching."
       ]
     },
+    "patternModeSelector": {
+      "contractRef": "docs/pattern-mode-selector-component-contract.json",
+      "requiredData": [
+        "laneId",
+        "activeMode",
+        "pendingMode",
+        "pendingBoundary",
+        "uiState",
+        "disabledReason",
+        "lastError"
+      ],
+      "variants": [
+        "segmented",
+        "compact",
+        "collapsedSummary"
+      ],
+      "rules": [
+        "Render MIDI Generation and MIDI Circular Pattern as visible options.",
+        "Keep active and pending states visually distinct.",
+        "Use engine snapshots as the source of truth for applied and pending mode state."
+      ]
+    },
     "moduleCard": {
       "requiredData": [
         "moduleId",
@@ -265,6 +287,7 @@
       "requiredComponents": [
         "sectionHeader",
         "modeSelector",
+        "patternModeSelector",
         "moduleCard",
         "patternEnginePanel",
         "meter"
@@ -291,6 +314,7 @@
       "tone": "synth",
       "requiredComponents": [
         "sectionHeader",
+        "patternModeSelector",
         "moduleCard",
         "patternEnginePanel",
         "meter"

@@ -10,6 +10,8 @@ Source inputs:
 - `main-performance-screen-component-contract.json`
 - `my-daw-prototype.png`
 - `module-states.md`
+- `pattern-mode-selector.md`
+- `pattern-mode-selector-component-contract.json`
 - `skills/mydaw-design-system-engineer`
 - `skills/mydaw-ux-ui-designer`
 - `skills/mydaw-frontend-engineer`
@@ -348,6 +350,8 @@ Rules:
 ### Pattern Engine Panel
 
 Purpose: Present pattern generation and circular pattern controls in a performable way.
+
+The detailed pattern mode selector behavior, mode parameters, MIDI engine snapshot fields, and scheduling contract are defined in `docs/pattern-mode-selector.md`.
 
 Required content:
 

@@ -7,6 +7,7 @@ Source inputs:
 - `docs/product-definition.md`
 - `docs/information-architecture.md`
 - `docs/design-system.md`
+- `docs/pattern-mode-selector.md`
 - `docs/my-daw-prototype.png`
 
 The main performance screen is the first usable surface. It is not a landing page, setup wizard, arrangement timeline, or mode hub.
@@ -134,6 +135,7 @@ Sampled mode:
 Pattern Engine:
 
 - Exposes `MIDI Generation` and `MIDI Circular Pattern`.
+- Uses the selector behavior and engine contract in `docs/pattern-mode-selector.md`.
 - Generation controls: density, complexity, variation, length.
 - Circular controls: steps, step activity preview, swing.
 - Mode or parameter changes show `applyTiming`: `immediate`, `nextStep`, `quantized`, or `async`.
@@ -323,6 +325,7 @@ The main screen uses these design-system components:
 | Mode Selector | Drums and pattern panels | tabs, segmented, compact |
 | Module Card | Drums and Synth lanes | instrument, source, compact, expanded |
 | Pattern Engine Panel | Drums and Synth lanes | active, pending, disabled, error |
+| Pattern Mode Selector | Pattern Engine Panel | segmented, compact, collapsedSummary |
 | Parameter Control | Modules, ARP, MIDI FX, FX slots | knob, slider, stepper, select, toggle |
 | Meter | Modules, lanes, shell, FX | audioLevel, midiActivity, cpu, clip, routeActivity |
 | FX Slot | Post-FX and Master FX | instrumentPost, master, compact, empty |
