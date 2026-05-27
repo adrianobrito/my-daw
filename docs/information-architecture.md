@@ -6,6 +6,7 @@ Source inputs:
 
 - `docs/product-definition.md`
 - `docs/design-system.md`
+- `docs/module-states.md`
 - `docs/my-daw-prototype.png`
 
 The IA uses the design system's MVP state names and dense, stage-readable layout guidance as implementation constraints.
@@ -213,6 +214,8 @@ Device changes must show pending, applying, success, degraded, and failed states
 ## State Visibility Rules
 
 State must be visible where the performer can act and summarized where it affects global safety.
+
+`module-states.md` defines the module-level state contract used by these visibility rules. The IA owns where state appears in the screen hierarchy; the module-state contract owns how module states behave, collapse, and map to frontend component fields.
 
 ### Active
 
